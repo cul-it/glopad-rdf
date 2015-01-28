@@ -1,4 +1,4 @@
 glopad-mapping.ttl
 skiptables.txt
-webapps/WEB-INF/mappings.ttl
+webapp/WEB-INF/mapping.ttl
 d2rq.war
