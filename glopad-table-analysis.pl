@@ -16,7 +16,7 @@ my $debug = 0;
 
 my $dbname = 'glopad';
 my $username = 'bdc34';
-my $pw = 'youpasswordhere';
+my $pw = 'xyz';
 my $host = 'localhost';
 my $port = 5432;
 
