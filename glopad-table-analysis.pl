@@ -309,10 +309,9 @@ close $fh;
 #
 #
 my $output_map = "glopad-mapping.ttl";
+my $output_map_v1 = $output_map . "pass1";
 
-
-
-my $d2rq_cmd = "./generate-mapping -o $output_map"
+my $d2rq_cmd = "./generate-mapping -o $output_map_v1"
   ." -u $username -p $pw "
   ." --skip-tables @" . $skip
   ." -d org.postgresql.Driver jdbc:postgresql:glopad";
@@ -321,7 +320,7 @@ print "$d2rq_cmd\n";
 
 `$d2rq_cmd`;
 
-open (my $fh, '>>', $output_map) or die "Could not open $output_map to add mappings $!";
+open (my $fh, '>>', $output_map_v1) or die "Could not open $output_map_v1 to add mappings $!";
 
 #
 # Here we are making the d2rq:PropertyBridge constilations for
@@ -756,9 +755,9 @@ my %table_to_label = (
 # 	d2rq:pattern "c_user_type #@@c_user_type.usertypeid@@";
 # with values from this hash.
 
-my $output_map_tmp = $output_map . ".tmp";
-open my $in,  '<',  $output_map      or die "Can't read $output_map: $!";
-open my $out, '>', "$output_map_tmp" or die "Can't write new file $output_map_tmp: $!";
+
+open my $in,  '<',  $output_map_v1      or die "Can't read $output_map_v1: $!";
+open my $out, '>', "$output_map" or die "Can't write new file $output_map: $!";
 
 while( <$in> ) {
 
@@ -776,15 +775,18 @@ while( <$in> ) {
 close $in;
 close $out;
 
-#
-#
-# Write to webapp/WEB-INF/mappings.ttl
-#
-#
+# remove tmp
+`rm $output_map_v1`;
 
+#
+#
+# Write to webapp/WEB-INF/mappings.ttl for use w
+# building a war file.
+#
+#
 
 my $webapp_out = "webapp/WEB-INF/mapping.ttl";
-open my $in,  '<',  $output_map_tmp      or die "Can't read $output_map_tmp: $!";
+open my $in,  '<',  $output_map      or die "Can't read $output_map: $!";
 open my $out, '>', $webapp_out or die "Can't write new file $webapp_out: $!";
 
 my $didit = 0;
