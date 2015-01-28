@@ -15,8 +15,8 @@ use DBI;
 my $debug = 0;
 
 my $dbname = 'glopad';
-my $username = 'bdc34';
-my $pw = 'xyz';
+my $username = $ARGV[0];
+my $pw = $ARGV[1];
 my $host = 'localhost';
 my $port = 5432;
 
