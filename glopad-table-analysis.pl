@@ -4,14 +4,29 @@
 # keys based on column names.
 # Runs d2rq generate and adds some hand coded mappings.
 
-# DONE: drop junk tables
-# DONE: ignore views
+# DONE: Ignore empty tables
+# DONE: Ignore testing tables.
+# DONE: Ignore views.
 
-# TODO: make sure we have a d_pa_geographic_affiliation mapping
+# DONE: d_function
+# Created d2rq dynamic property names for several
+# places where the d_function table is used.
+
+# DONE: rdfs:label statements
+# James R. identified columns with human readable names. This
+# script now post processes the output of d2rq generate-mapping
+# to use improved names in rdfs:labes when it can.
+
+# DONE: make sure we have a d_pa_geographic_affiliation mapping
+# d_pa_geographic_affiliation is mapped.
 
 # TODO: Collections
 # The 2004-04-28 diagram indicates a set/subset relation for digital objects.
 # See if we can pull this out of r_digdoc_collection or somethinig.
+
+# TODO: d_date table
+# There are some sophisticated date capabilities.
+#
 
 # TODO: Type tables:
 # There are some type tables that need to be considered and added to d_ tables as rdf:types.
@@ -22,7 +37,7 @@
 #  d_production_type with columns  typeid,type
 #  d_component_type with columns  typeid,type
 
-# TODO: Affiliations:
+# DONE: Affiliations:
 # There seems to be a set of affiliations which are a sort of relationship. We should work on these.
 #  d_pa_geographic_affiliation with columns  affid,affiliation,latitude,longitude
 #  d_person_affiliation with columns  affid,affiliation
