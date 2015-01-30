@@ -1,0 +1,52 @@
+GloPadRDF
+
+Attempt to move GloPad into RDF and then into some visualization tool.
+
+Project for Technology Innovation Week - Jan 6 2015
+Brian Caruso, Shinwoo Kim, James Reidy.
+
+* Glopad to RDF
+The glopad data was provided as a dump of a postgres database. This
+was loaded into a postgres 9.3 database and then mapped to RDF using
+D2RQ.
+
+** To generate mappings and deploy to tomcat
+
+#+BEGIN_SRC bash
+
+$ cd d2rq
+$ ./glopad-table-analysis.pl yourdbuser dbpassword
+# result is placed in webapp/WEB-INF/mapping.ttl
+$ ant war
+$ cp d2rq.war /lib-dev/tomcat/webapps
+
+#+END_SRC
+
+** To dump glopad as N3 RDF
+
+#+BEGIN_SRC bash
+
+$ cd d2rq
+$ ./glopad-table-analysis.pl bdc34 xyz
+# result is placed in webapp/WEB-INF/mapping.ttl
+$ ./dump-rdf -b http://bdc34-dev.library.cornell.edu:8080/GloPAD/ webapp/WEB-INF/mapping.ttl > glopad-dump.n3
+
+#+END_SRC
+
+** To generate an ontology for the RDF
+The glopad-dump.n3 doesn't have classes and properties defined.
+Pellet can generate them. See:
+http://clarkparsia.com/pellet/icv/
+
+#+BEGIN_SRC bash
+
+$ cd ~/pellet
+$ ./pellet.sh lint -v -only RDF -f /lib-dev/vitro-glopad/lopad-ont.rdf ~/glopadRdf/glopad-dump.n3 > /lib-dev/vitro-glopad/glopadLint.out
+
+#+END_SRC
+
+* Visualization of GlopadRDF
+
+
+
+
