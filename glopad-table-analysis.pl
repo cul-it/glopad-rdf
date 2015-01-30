@@ -69,6 +69,7 @@ my $port = 5432;
 #added to d2rq skip tables
 my @skip_tables=(
                  'c_aaa_test',
+                 't_place_affiliation',
                  '/field_.*/',
                  '/.*_ml/',
                  '/i_.*/',
@@ -374,6 +375,11 @@ foreach my $rtableLine ( @r_basic ){
     ".\n\n";
 }
 
+#
+#
+# Adding manual affiliations
+#
+#
 print $fh "\n# Hand added mappings suggested by James Reidy
 #r_component_geographic_affiliation | ignore
 
@@ -431,7 +437,8 @@ print $fh q(
 #
 map:r_biblio_author_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_biblio_author;
-    d2rq:dynamicProperty "http://r_biblio_author/@@d_biblio_authortype.authortype@@";
+    d2rq:dynamicProperty "vocab:r_biblio_author_@@d_biblio_authortype.authortypeid@@";
+    d2rq:propertyDefinitionLabel "@@d_biblio_authortype.authortype@@"@en;
     d2rq:refersToClassMap map:d_bibliography;
     d2rq:join "d_biblio_author.authorid <= r_biblio_author.authorid";
     d2rq:join "d_bibliography.biblioid <= r_biblio_author.biblioid";
@@ -449,7 +456,8 @@ map:r_biblio_author_partial a d2rq:PropertyBridge;
 
 map:r_component_person_associated_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_component_person_associated/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_component_person_associated_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_component;
     d2rq:join "d_person.personid <= r_component_person_associated.personid";
     d2rq:join "d_component.componentid <= r_component_person_associated.componentid";
@@ -465,7 +473,8 @@ map:r_component_person_associated_partial a d2rq:PropertyBridge;
     .
 map:r_component_person_represented_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_component_person_represented/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_component_person_represented_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_component;
     d2rq:join "d_person.personid <= r_component_person_represented.personid";
     d2rq:join "d_component.componentid <= r_component_person_represented.componentid";
@@ -481,7 +490,8 @@ map:r_component_person_represented_partial a d2rq:PropertyBridge;
     .
 map:r_digdoc_person_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_digdoc_person/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_digdoc_person_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_digdoc;
     d2rq:join "d_person.personid <= r_digdoc_person.personid";
     d2rq:join "d_digdoc.digdocid <= r_digdoc_person.digdocid";
@@ -497,7 +507,8 @@ map:r_digdoc_person_partial a d2rq:PropertyBridge;
     .
 map:r_pa_group_person_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_pa_group_person/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_pa_group_person_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_pa_group;
     d2rq:join "d_person.personid <= r_pa_group_person.personid";
     d2rq:join "d_pa_group.pagroupid <= r_pa_group_person.pagroupid";
@@ -513,7 +524,8 @@ map:r_pa_group_person_partial a d2rq:PropertyBridge;
     .
 map:r_pa_person_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_pa_person/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_pa_person_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_performing_arts;
     d2rq:join "d_person.personid <= r_pa_person.personid";
     d2rq:join "d_performing_arts.paid <= r_pa_person.paid";
@@ -529,7 +541,8 @@ map:r_pa_person_partial a d2rq:PropertyBridge;
     .
 map:r_piece_creator_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_piece_creator/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_piece_creator_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_piece;
     d2rq:join "d_person.personid <= r_piece_creator.personid";
     d2rq:join "d_piece.pieceid <= r_piece_creator.pieceid";
@@ -545,7 +558,8 @@ map:r_piece_creator_partial a d2rq:PropertyBridge;
     .
 map:r_sourceobject_person_property_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_person;
-    d2rq:dynamicProperty "http://r_sourceobject_person/@@d_function.function@@";
+    d2rq:dynamicProperty "vocab:r_sourceobject_person_@@d_function.functionid@@";
+    d2rq:propertyDefinitionLabel "@@d_function.function@@"@en;
     d2rq:refersToClassMap map:d_source_object;
     d2rq:join "d_person.personid <= r_sourceobject_person.personid";
     d2rq:join "d_source_object.sourceobjectid <= r_sourceobject_person.sourceobjectid";
@@ -562,7 +576,8 @@ map:r_sourceobject_person_partial a d2rq:PropertyBridge;
 
 map:r_performance_piece_dynamicProp a d2rq:PropertyBridge;
     d2rq:belongsToClassMap map:d_performance;
-    d2rq:dynamicProperty "http://r_performance_piece/@@d_structure_division.structuredivision@@";
+    d2rq:dynamicProperty "vocab:r_performance_piece_@@d_structure_division.structuredivisionid@@";
+    d2rq:propertyDefinitionLabel "@@d_structure_division.structuredivision@@"@en;
     d2rq:refersToClassMap map:d_piece;
     d2rq:join "d_performance.performanceid <= r_performance_piece.performanceid";
     d2rq:join "d_piece.pieceid <= r_performance_piece.pieceid";
@@ -579,8 +594,250 @@ map:r_performance_piece_partial a d2rq:PropertyBridge;
 # End of Shinwoo's dynamic properites
 );
 
-close $fh;
 
+
+#
+#
+# Adding complex relations for r_performance_person and r_production_creator
+#
+#
+#
+
+print $fh q(
+#
+# Mapping for the complex relationship in r_performance_person
+#
+map:r_performance_person a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "r_performance_person/@@r_performance_person.r_performance_person_id@@";
+    d2rq:class vocab:r_performance_person;
+    d2rq:classDefinitionLabel "r_performance_person";
+    .
+#
+# Mapping for the complex relationship in r_production_creator
+#
+map:r_production_creator a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "r_production_creator/@@r_production_creator.productionid@@/@@r_production_creator.personid@@";
+    d2rq:class vocab:r_production_creator;
+    d2rq:classDefinitionLabel "r_production_creator";
+    .
+
+map:br_performance_person_performanceid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_performanceid;
+    d2rq:refersToClassMap map:d_performance;
+    d2rq:join "d_performance.performanceid <= r_performance_person.performanceid";
+    .
+map:br_performance_person_personid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_personid;
+    d2rq:refersToClassMap map:d_person;
+    d2rq:join "d_person.personid <= r_performance_person.personid";
+    .
+map:br_performance_person_functionid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_functionid;
+    d2rq:refersToClassMap map:d_function;
+    d2rq:join "d_function.functionid <= r_performance_person.functionid";
+    .
+map:br_performance_person_instrumentid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_instrumentid;
+    d2rq:refersToClassMap map:d_instrument;
+    d2rq:join "d_instrument.instrumentid <= r_performance_person.instrumentid";
+    .
+map:br_performance_person_roleid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_roleid;
+    d2rq:refersToClassMap map:d_role;
+    d2rq:join "d_role.roleid <= r_performance_person.roleid";
+    .
+map:br_performance_person_characterid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d2rq:property vocab:br_performance_person_characterid;
+    d2rq:refersToClassMap map:d_character;
+    d2rq:join "d_character.characterid <= r_performance_person.characterid";
+    .
+
+map:br_production_creator_productionid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_production_creator;
+    d2rq:property vocab:br_production_creator_productionid;
+    d2rq:refersToClassMap map:d_production;
+    d2rq:join "d_production.productionid <= r_production_creator.productionid";
+    .
+map:br_production_creator_personidid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_production_creator;
+    d2rq:property vocab:br_production_creator_personid;
+    d2rq:refersToClassMap map:d_person;
+    d2rq:join "d_person.personid <= r_production_creator.personid";
+    .
+map:br_production_creator_functionid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_production_creator;
+    d2rq:property vocab:br_production_creator_functionid;
+    d2rq:refersToClassMap map:d_function;
+    d2rq:join "d_function.functionid <= r_production_creator.functionid";
+    .
+map:br_production_creator_roleid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_production_creator;
+    d2rq:property vocab:br_production_creator_roleid;
+    d2rq:refersToClassMap map:d_role;
+    d2rq:join "d_role.roleid <= r_production_creator.roleid";
+    .
+
+);
+
+
+#
+#
+# Add image urls back to glopad web site
+#
+#
+
+print $fh q{
+
+# Adding image urls that link back to Glopad web site
+
+map:d_digdoc_thumburl_image a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_digdoc;
+d2rq:property http://dbpedia.org/property/logo>;
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/', d_digdoc.thumburl::text)";
+d2rq:condition "length(trim(d_digdoc.thumburl)) <> 0";
+.
+
+map:d_digdoc_thumburl_image a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_digdoc;
+d2rq:property http://dbpedia.org/property/logo>;
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/', d_digdoc.url::text)";
+d2rq:condition "length(trim(d_digdoc.thumburl)) <> 0";
+.
+
+map:d_digdoc_url_image a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_digdoc;
+d2rq:property <http://dbpedia.org/property/logo>;
+d2rq:propertyDefinitionLabel "URL to image";
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/glopad/images/glopad/', d_digdoc.digdocid::text, '.jpg')";
+.
+
+
+};
+
+#
+# Add geo codeing for d_place resources for demo purposes.
+#
+
+print $fh q{
+
+#
+# Add geo codeing for d_place resources for demo purposes.
+#
+
+
+map:d_place_latitude a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:d_place;
+	d2rq:property <http://www.w3.org/2003/01/geo/wgs84_pos#lat>;
+	d2rq:propertyDefinitionLabel "d_place latitude";
+	d2rq:column "d_place.latitude";
+	d2rq:datatype xsd:double;
+	.
+
+map:d_place_longitude a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:d_place;
+	d2rq:property <http://www.w3.org/2003/01/geo/wgs84_pos#long>;
+	d2rq:propertyDefinitionLabel "d_place longitude";
+	d2rq:column "d_place.longitude";
+	d2rq:datatype xsd:double;
+	.
+
+};
+
+#
+# Using type tables to add types to some resources.
+#
+# This approch has not been working because there are non alphadig characters
+# in the $type fields.
+#
+# It seems that this is valid but Vitro doesn't deal with it well.
+# Maybe the rows in d_component_type could create classes with URIs
+# with componentid?
+#
+
+# d_component and d_component_type
+# d_digdoc and thumbfiletypeid, thumbmimetypeid, d_mime_type mimetypeid, typeid(to what table?)
+# d_character and d_character_type
+# d_piece_relation_type and r_piece,pieceid,relatedpieceid,typeid
+# d_place_type and r_place_type with columns  typeid,type
+# d_production_type and r_production_type
+# d_digdoc and thumbfiletypeid, thumbmimetypeid, d_mime_type mimetypeid, typeid(ALWAYS NULL)
+#
+
+# my @types_tables = (
+#  [ 'd_component', 'typeid', 'd_component_type', 'typeid', 'type'],
+#  [ 'd_character', 'charactertypeid', 'd_character_type', 'charactertypeid', 'charactertype'],
+# );
+
+# print $fh "
+# #
+# # Adding types to some resources based on 1:1 d_ table to d_ table relations.
+# #
+# ";
+
+# foreach my $typedef ( @types_tables ){
+#   my ($dtable, $did, $ttable, $tid, $type) = @{$typedef};
+
+#   # Need to purge non URIable chars from type
+#   $dbh->do("update $ttable set $type = regexp_replace( $type , '[^\w]', '_')");
+
+#   print "doing $dtable $ttable\n";
+#   print $fh "
+#   map:type_for_${dtable}_from_$ttable a d2rq:PropertyBridge;
+#    d2rq:belongsToClassMap map:$dtable;
+#    d2rq:property rdf:type;
+#    d2rq:join \"$dtable.$did => $ttable.$tid\";
+#    d2rq:uriPattern \"${dtable}_type/\@\@$ttable.$type|urlify\@\@\";
+#   .
+
+# ";
+# }
+
+# print $fh "
+
+# #
+# # Adding types to some resources based on 1:n d_ -> r_ -> d_*_type table relations.
+# #
+# ";
+
+# my @types_r_tables = (
+#  [ 'd_place', 'placeid', 'r_place_type', 'd_place_type', 'typeid', 'type'] ,
+#  [ 'd_production', 'productionid', 'r_production_type', 'd_production_type', 'typeid', 'type'] ,
+# );
+
+
+# foreach my $typedef ( @types_r_tables ){
+#   my ($dtable, $did, $rtable, $ttable, $tid, $type) = @{$typedef};
+
+#   # Need to purge non URIable chars from type
+#   $dbh->do("update $ttable set $type = regexp_replace( $type , '[^\w]', '_')");
+
+#   print "doing $dtable $rtable $ttable\n";
+#   print $fh "
+#   map:type_for_${dtable}_from_$rtable a d2rq:PropertyBridge;
+#    d2rq:belongsToClassMap map:$dtable;
+#    d2rq:property rdf:type;
+#    d2rq:join \"$dtable.$did <= $rtable.$did\";
+#    d2rq:join \"$rtable.$tid => $ttable.$tid\";
+#    d2rq:uriPattern \"${dtable}_type/\@\@$ttable.$type|urlify\@\@\";
+#   .
+
+# ";
+# }
+
+# A dynamic propety for d_piece and d_piece_relation_type
+# d_piece and d_piece_relation_type and r_piece with columns pieceid,relatedpieceid,typeid
+
+
+
+close $fh;
 
 #
 #
@@ -766,15 +1023,18 @@ my %table_to_label = (
 );
 
 
-# Need to replace lines like:
-# 	d2rq:pattern "c_user_type #@@c_user_type.usertypeid@@";
-# with values from this hash.
+
+
 
 
 open my $in,  '<',  $output_map_v1      or die "Can't read $output_map_v1: $!";
 open my $out, '>', "$output_map" or die "Can't write new file $output_map: $!";
 
 while( <$in> ) {
+
+  # Need to replace lines like:
+  # 	d2rq:pattern "c_user_type #@@c_user_type.usertypeid@@";
+  # with values from this hash to make nice labels.
 
   if( /d2rq:pattern "(.*) #@@(.*)\.(.*)@@";/
       && $table_to_label{$1}
@@ -783,7 +1043,19 @@ while( <$in> ) {
     my $column = $table_to_label{$1};
     print $out "  #label improved by glopad-table-analysis.pl\n";
     print $out "  d2rq:pattern \"\@\@$1.$column\@\@\";\n";
-  }else{
+  }
+
+  # Need to replace lines like:
+  # d2rq:uriPattern "c_multilingual_language/@@c_multilingual_language.multilangid@@";
+  # with
+  # d2rq:uriPattern "c_multilingual_language/@@c_multilingual_language.multilangid|urlify@@";
+  # with values from this hash to make good NCNames
+
+  # elsif (  /d2rq:uriPattern *"(.*)@@([^|@]*)@@";/ ){
+  #   print $out "    # add encode to column id\n";
+  #   print $out "    d2rq:uriPattern \"$1\@\@$2|encode\@\@\";\n";
+  # }
+  else{
     print $out $_;
   }
 }
@@ -844,7 +1116,3 @@ print $out qq(
 
 close $in;
 close $out;
-
-#
-#
-#
