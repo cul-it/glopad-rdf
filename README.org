@@ -47,6 +47,8 @@ $ ./pellet.sh lint -v -only RDF -f /lib-dev/vitro-glopad/lopad-ont.rdf ~/glopadR
 
 * Visualization of GlopadRDF
 
+See contents of lodlive directory.
+
 
 
 
