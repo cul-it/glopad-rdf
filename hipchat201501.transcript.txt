@@ -1,0 +1,1904 @@
+Brian Caruso
+Jan-26 10:18 AM
+Shinwoo, I think here are some steps we need to work on:
+Shinwoo Kim
+Jan-26 10:19 AM
+yes, I don't think I have access to that server
+Brian Caruso
+Jan-26 10:19 AM
+1. figure out the glopad data model and what we want to translate to rdf.
+2. look at software and figure out what we want to do and what we want use to do it.
+3. ???
+What do you think?
+Shinwoo Kim
+Jan-26 10:20 AM
+looks good
+I think if we can extract the data we want as rdf triple before Wed. meeting, I think we would be in good place
+Brian Caruso
+Jan-26 10:20 AM
+Okay, do you want to look at some software or look at GloPAD?
+I can point you to some software if you'd like.
+Shinwoo Kim
+Jan-26 10:21 AM
+maybe we will have to ask Chris to give us access to that server or ask Jim for svn/phpMyAdmin uid/pwd
+but in the meantime, could you give me some pointer to the software?
+this is innovation week and we all should be learning the technologies :)
+Brian Caruso
+Jan-26 10:23 AM
+http://en.wikipedia.org/wiki/List_of_subject-predicate-object_databases
+Shinwoo Kim
+Jan-26 10:24 AM
+did you add Jim to this room?
+Brian Caruso
+Jan-26 10:26 AM
+I'd look at sesame, openlink virtuoso, 4store, Jena(it's a library, Fuseki is the server software). Also R2D2 http://r2d2-mapper.sourceforge.net/
+Shinwoo Kim
+Jan-26 10:26 AM
+ok, thanks!
+Brian Caruso
+Jan-26 10:26 AM
+Openlink has huge documentation so it is a bit difficult to figure out.
+Also vivo https://wiki.duraspace.org/display/VIVO/VIVO
+The vivo docs tend to be a bit focused on the development effort instead of the sofware. I'll find a link to some meaty info...
+Brian Caruso
+Jan-26 10:29 AM
+Here are the vivo install instructions. http://www.vivoweb.org/support/user-guide/installation
+Okay, I'll look into the glopad db model and start working on how to figure it out.
+Shinwoo Kim
+Jan-26 10:30 AM
+thanks!
+Brian Caruso
+Jan-26 10:31 AM
+Also, give a quick read through of this RDF primer: http://www.w3.org/TR/2014/NOTE-rdf11-primer-20140225/
+Shinwoo Kim
+Jan-26 10:31 AM
+lots of info
+Brian Caruso
+Jan-26 10:32 AM
+Ya, start with the rdf primer, then read r2d2 docs and its mapping doc (since we knokw we are going to use it) then check 4stroe, fuseki, sesame and finally openlink virtuoso.
+Shinwoo Kim
+Jan-26 10:32 AM
+will do, thanks!
+Brian Caruso
+Jan-26 10:51 AM
+I'm looking at the excel file with field_names and table_names. I'm going to try to make some sense of it.
+Shinwoo Kim
+Jan-26 11:03 AM
+I have a question
+<code>01 BASE <http://example.org/>;
+02 PREFIX foaf: <http://xmlns.com/foaf/0.1/>;
+03 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>;
+04 PREFIX schema: <http://schema.org/>;
+05 PREFIX dcterms: <...
+;
+06    PREFIX wd: <http://www.wikidata.org/entity/>;
+07 
+08    <bob#me>
+09        a foaf:Person ;
+Show full text
+Brian Caruso
+Jan-26 11:04 AM
+Okay
+Shinwoo Kim
+Jan-26 11:04 AM
+hmm... forgot how to use the code thing in hipchat
+but anyway, what is that "a" stand for there?
+Brian Caruso
+Jan-26 11:04 AM
+It is a little funny.
+the 'a' is rdf:type and is a special symbol in the n3 syntax.
+Shinwoo Kim
+Jan-26 11:04 AM
+I see, thanks
+Brian Caruso
+Jan-26 11:06 AM
+So I'm looking at the tables.
+There are a bunch that start with "d_" and a bunch that start with "r_" I think d is for domain or data and r is for relation
+d_ are the things and r_ are the relations between them.
+Shinwoo Kim
+Jan-26 11:45 AM
+skimmed through the w3 intruduction
+I will go through the sesame tutorials a bit
+or rather read about r2d2
+Brian Caruso
+Jan-26 11:47 AM
+Cool, sesame is interesting because it has this concept "sails" (I think) which are modular parts of the triple store. So some crazy setups can be created.
+Shinwoo Kim
+Jan-26 1:22 PM
+Hello Jim!
+James Reidy
+Jan-26 1:22 PM
+Hi.
+James Reidy
+Jan-26 1:25 PM
+I just send access to the GloPAD editor interface to you both - glopad3
+James Reidy
+Jan-26 1:25 PM
+sent
+James Reidy
+Jan-26 1:26 PM
+Got to start in on the reading list above...
+James Reidy
+Jan-26 3:46 PM
+I can't find any code or documentation for r2d2
+Shinwoo Kim
+Jan-26 3:46 PM
+I had same experience
+I am currently following jena tutorials
+Brian Caruso
+Jan-26 3:47 PM
+http://r2d2-mapper.sourceforge.net/
+James Reidy
+Jan-26 3:47 PM
+there's nothing there
+Brian Caruso
+Jan-26 3:48 PM
+well that's odd...
+Shinwoo Kim
+Jan-26 3:49 PM
+is r2d2 written in php?
+Brian Caruso
+Jan-26 3:50 PM
+I don't think so.
+In the mean time take a look at this:
+http://triplify.org/Overview
+I'll look for r2d2 on my severs.
+Shinwoo Kim
+Jan-26 3:51 PM
+I did find this link: http://wiki.aksw.org/Projects/R2D2
+Brian Caruso
+Jan-26 3:51 PM
+At it's D2RQ!
+http://d2rq.org/
+..
+sorry.
+James Reidy
+Jan-26 3:52 PM
+Much better - thanks.
+Shinwoo Kim
+Jan-26 3:52 PM
+thanks
+James Reidy
+Jan-26 4:16 PM
+I was able to build /Users/jgr25/Documents/glopad/d2rq/d2rq-0.8.1/lib/d2rq-0.8.1.jar on my mac but I don't know what to do about jdbc
+Shinwoo Kim
+Jan-26 4:39 PM
+@JimReidy here's what I did
+Since I installed the latest version of postgresql (9.4), I got jdbc jar file here: https://jdbc.postgresql.org/download.html#current
+I got the jdbc41
+James Reidy
+Jan-26 4:41 PM
+should we match it with the one on sf-lib-dig-005.serverfarm.cornell.edu ?
+Shinwoo Kim
+Jan-26 4:41 PM
+then I copied it to /D2RQ/lib/db-drivers directory
+I then ran the generate-mapping script as:
+./generate-mapping -o mapping.ttl -d org.postgresql.Driver -u UID -p PWD jdbc:postgresql:glopad3
+assuming the db name is glopad3
+it seemed to do something
+James Reidy
+Jan-26 4:44 PM
+I have to find the configuration file and make sure it's glopad3 not glopad4
+James Reidy
+Jan-26 4:44 PM
+(unless you remember)
+Shinwoo Kim
+Jan-26 4:45 PM
+I don't have access to the server and don't have credentials to connect to phpMyAdmin so I was working with the database dump Brian was using
+James Reidy
+Jan-26 4:45 PM
+does the mapping.ttl file look like lots of pfunc and stuff?
+Shinwoo Kim
+Jan-26 4:46 PM
+hmm...
+James Reidy
+Jan-26 4:46 PM
+Search for 'Black Patti's Fifty Troubadours'
+James Reidy
+Jan-26 4:47 PM
+http://www.glopad.org/pi/en/record/digdoc/1003610
+James Reidy
+Jan-26 4:48 PM
+maybe .ttl is a binary file?
+Shinwoo Kim
+Jan-26 4:48 PM
+it looks like my copy of the database dump doesn't include pfunc table but I will double check
+Shinwoo Kim
+Jan-26 4:51 PM
+the mapping file is plain text file and looks like is just listing some relations
+James Reidy
+Jan-26 4:51 PM
+maybe it's just that info table - no wonder it's so small.
+Shinwoo Kim
+Jan-26 4:51 PM
+as the tables didn't have any foreign keys, there were lots of warnings and I think Brian was working on adding some foreign key relations to r2dq to set up the relationships
+and I just confirmed with Brian that the copy we were using does not have pfunc table
+James Reidy
+Jan-26 4:53 PM
+I'll double check on the database name and attempt to do a full dump of the right one, and be sure it includes the Fifty Troubadours.
+Shinwoo Kim
+Jan-26 4:54 PM
+@JimReidy we probably should match the version of postgresql to the one the server is using but I didn't know which version it was using
+James Reidy
+Jan-26 4:55 PM
+-bash-3.2$ psql --version
+psql (PostgreSQL) 8.4.20
+contains support for command-line editing
+Shinwoo Kim
+Jan-26 4:55 PM
+ok, thanks
+could you make another database dump with everything and make it available to us as well?
+James Reidy
+Jan-26 4:57 PM
+Yes - I'm hunting around on the server for the secret credentials fle
+Shinwoo Kim
+Jan-26 4:57 PM
+thanks!
+Shinwoo Kim
+Jan-26 5:03 PM
+I can only find postgres 8.4.22 so I am going to use that... hopefully it isn't too different from 8.4.20
+James Reidy
+Jan-26 5:04 PM
+ok
+Brian Caruso
+Jan-26 5:04 PM
+The ttl file that dr2q outputs is the mapping it will use, it isn't the data.
+when run as a service, it connects to the db and translates sparql to sql
+James Reidy
+Jan-26 5:06 PM
+good to know. Where should we be running this d2rq? our own machines?
+Shinwoo Kim
+Jan-26 5:07 PM
+I was, but my mac is having problems installing postgres 8.4.22 so I will try running them all on my dev vm
+James Reidy
+Jan-26 5:07 PM
+It seems like a machine we can all get on would be ideal
+Brian Caruso
+Jan-26 5:08 PM
+I did it on my dev vm.
+It seems like once we do the mapping we can just put it somewhere we can all get it.
+James Reidy
+Jan-26 5:08 PM
+OK
+James Reidy
+Jan-26 5:09 PM
+I found that gloapad is the correct database - now to make a full dump
+Shinwoo Kim
+Jan-26 5:10 PM
+thanks
+Brian Caruso
+Jan-26 5:10 PM
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_name>; "Black Patti Troubadours" .
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_lastupdateddateid>; "20050302"^^<http://www.w3.org/2001/XMLSchema#integer>; .
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_migrationapprovalid>; "1"^^<http://www.w3.org/2001/XMLSchema#integer>; .
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_pagroupid>; "1110"^^<http://www.w3.org/2001/XMLSchema#integer>; .
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_lastupdatedbyid>; "49"^^<http://www.w3.org/2001/XMLSchema#integer>; .
+<http://localhost:2020/d_pa_group/1110>; <http://localhost:2020/vocab/d_pa_group_notes>; "Sissieretta Jones was a classically-trained opera singer, and one of the most popular stars of the late 19th and early 20th century stage. She was dubbed \"Black Patti\" after the Italian singer Adelina Patti. Her managers organized a larger minstrel stage show to tour with her, known as Black Patti Troubadours, whose early minstrel show format later gave way to fully-formed musical comedy. They toured extensively in the US and Europe. SFPALM" .
+Show full text
+Shinwoo Kim
+Jan-26 5:10 PM
+looks good
+James Reidy
+Jan-26 5:11 PM
+Yay!
+Brian Caruso
+Jan-26 5:11 PM
+It is at bdc34-dev:/tmp/glopad_data.rdf
+I'll have to look up how I did the original convert.
+Or figure it out again.
+Shinwoo Kim
+Jan-26 5:12 PM
+I will see you tomorrow
+James Reidy
+Jan-26 5:28 PM
+So I guess we should be looking at the D2RQ Mapping Language next.
+James Reidy
+Jan-26 5:30 PM
+http://d2rq.org/d2rq-language#examples
+January 27, 2015
+Brian Caruso
+Jan-27 9:41 AM
+Ya. I'm attempting to figure some of this stuff out by checking out the table and column names.
+James Reidy
+Jan-27 9:42 AM
+Do you think we should build a mapping for d2rq by hand?
+Brian Caruso
+Jan-27 10:33 AM
+I'm hoping that we can do most of it by using a script to match up column names in r_ tables with d_ tables
+James Reidy
+Jan-27 10:34 AM
+in a meeting now
+Brian Caruso
+Jan-27 10:34 AM
+I'm most of the way there.
+Maybe Shinwoo and I can look at the D2rq mapping lang and my results.
+Brian Caruso
+Jan-27 10:42 AM
+So there are a lot of tables with "affid" as a column name
+Brian Caruso
+Jan-27 10:55 AM
+@ShinwooKim I think you can get my script from bdc34-dev:/users/bdc34/glopad/glopad-table-analysis.pl
+The output looks like this:
+Shinwoo Kim
+Jan-27 10:55 AM
+@BrianCaruso thanks!
+Brian Caruso
+Jan-27 10:57 AM
+I've pulled out the keys for the d_ tables and tried to find the forigen keys from the r_ tables to the d_ tables.
+James Reidy
+Jan-27 10:58 AM
+There is a table of all the foreign keys and descriptions for each table
+Brian Caruso
+Jan-27 10:58 AM
+My hope is to use the foreign keys in the d2rq mapping.
+i_table_info?
+James Reidy
+Jan-27 10:58 AM
+yes
+Brian Caruso
+Jan-27 10:59 AM
+I don't see foreign keys there.
+James Reidy
+Jan-27 11:00 AM
+just a sec
+James Reidy
+Jan-27 11:01 AM
+name - name of the table
+Brian Caruso
+Jan-27 11:01 AM
+There is the field_info table which has 'related_table' but it doesn't seem well filled out
+James Reidy
+Jan-27 11:02 AM
+index_field - key to the named table
+Brian Caruso
+Jan-27 11:03 AM
+Where is index_field?
+James Reidy
+Jan-27 11:04 AM
+It's a field in i_table_info
+James Reidy
+Jan-27 11:06 AM
+the convention is to use the name of the index field as a field in other tables. That implies a foreign key.
+James Reidy
+Jan-27 11:07 AM
+d_component has field sizemeasureid
+Brian Caruso
+Jan-27 11:08 AM
+but with r_production productionid, what table is it a foreign key too?
+James Reidy
+Jan-27 11:09 AM
+sizemeasureid is a key to the d_size_measure table and the d_size_measure_ml tables
+Brian Caruso
+Jan-27 11:10 AM
+So you're saying we can take the column name, drop the id part, and and use that to make up the name of the d_ table?
+James Reidy
+Jan-27 11:10 AM
+to find the table search i_table_info for the tables with productionid as the index_field
+James Reidy
+Jan-27 11:11 AM
+that drop the id does not allways work, so search the i_table_info instead (at least this is what I rememeber)
+James Reidy
+Jan-27 11:12 AM
+example of d_size_measure is a case in point
+Brian Caruso
+Jan-27 11:12 AM
+But what about affid? It is listed as the index_field for a dozen tables.
+James Reidy
+Jan-27 11:13 AM
+hmmm - lemme look
+James Reidy
+Jan-27 11:14 AM
+right - I need to look deeper, and also determine what the flags mean
+Brian Caruso
+Jan-27 11:20 AM
+Also, where is p-func? is it a table?
+Brian Caruso
+Jan-27 11:23 AM
+@ShinwooKim This mapping stuff doesn't look too bad.
+James Reidy
+Jan-27 11:26 AM
+performer function - d_function
+James Reidy
+Jan-27 11:32 AM
+Digital Object > Component(s) represented in digital object > Production(s) associated with component > Function
+*/d_digdoc/r_digdoc_component/r_component_production/r_production_creator:functionid 94
+Function
+Agent
+from
+James Reidy
+Jan-27 11:32 AM
+http://www.glopad.org/pi/en/explorer/digdoc/1158
+James Reidy
+Jan-27 11:33 AM
+Digital Object > Component(s) represented in digital object > Production(s) associated with component > Function
+*/d_digdoc/r_digdoc_component/r_component_production/r_production_creator:functionid 113
+Function
+House/Theater manager
+Brian Caruso
+Jan-27 11:46 AM
+@ShinwooKim Maybe this would work for functions: http://d2rq.org/d2rq-language#example-typecodes
+Shinwoo Kim
+Jan-27 11:51 AM
+that is for making the bidirectional relationships on relation tables with 3 foreign keys, right?
+Brian Caruso
+Jan-27 11:52 AM
+I was thinking that we could generate a mapping for each row in d_func
+d2rq:condition "d_func.funcionid= 2";
+Shinwoo Kim
+Jan-27 11:53 AM
+@JimReidy there appears to be some relation tables that has three foreign keys and we are trying to figure out how best to set up the relationships
+or maybe I am off :)
+James Reidy
+Jan-27 11:54 AM
+Like r_person_creator - it has 4 foreign keys
+Shinwoo Kim
+Jan-27 11:54 AM
+that's even more trickier
+James Reidy
+Jan-27 11:55 AM
+Is this a blank node?
+Shinwoo Kim
+Jan-27 11:55 AM
+hmm... I don't have that table on my db dump
+Brian Caruso
+Jan-27 11:56 AM
+@JimReidy could be a blank node if we wanted.
+James Reidy
+Jan-27 11:56 AM
+sorry - r_production_creator
+Brian Caruso
+Jan-27 11:56 AM
+@ShinwooKim You are not off
+Shinwoo Kim
+Jan-27 11:57 AM
+@Brian, great :)
+@JimReidy it appears as if on that table, productionid and personid together function as primary key
+Brian Caruso
+Jan-27 11:57 AM
+For the tables that use d_func it would be great if we could use the d_func to name the property to make the RDF easier to read/workwith
+Shinwoo Kim
+Jan-27 11:59 AM
+I will be back after lunch
+Brian Caruso
+Jan-27 11:59 AM
+@JimReidy We either way.
+James Reidy
+Jan-27 11:59 AM
+So... are you guys working with bdc34-dev:/users/bdc34/glopad/glopad-table-analysis.pl to form the mapping?
+Brian Caruso
+Jan-27 11:59 AM
+We can make up an ontology (easier but likely to have problems) or we can reuse one if we can find one.
+I'm using that to figure out what the keys are like. I was thinking that later we'd create the ttl mapping with that script.
+I"m setting up a vitro for glopad on my dev vm right now.
+James Reidy
+Jan-27 12:01 PM
+great
+James Reidy
+Jan-27 12:02 PM
+I can go looking for ontologies - you say it's for d_func - you mean d_function?
+Brian Caruso
+Jan-27 12:03 PM
+@JimReidy ya, d_function
+James Reidy
+Jan-27 12:05 PM
+I'll search for Bagpiper first...
+Brian Caruso
+Jan-27 12:05 PM
+?
+is Bagpiper on d_function?
+James Reidy
+Jan-27 12:18 PM
+yes, and carpenter and banjoist
+James Reidy
+Jan-27 12:18 PM
+How about http://www.w3.org/TR/vocab-org/#class-role
+Brian Caruso
+Jan-27 12:32 PM
+Ya, that looks good, we could make our properties subproperties of org:Role. In that way we say glopad:Bagpiper is a more specific version of org:Role.
+James Reidy
+Jan-27 12:32 PM
+or maybe http://www.w3.org/TR/vocab-org/#org:Membership since it's a specific person
+Brian Caruso
+Jan-27 12:33 PM
+Then other people have a general idea what our glopad:Bagpiper.
+skos get to be a pain in the butt with this stort of thing.
+I think that vivo now uses a lot of org:Membership instances.
+So maybe there is already support for it.
+I'd be tempted to not do skos org:Membership to make things easier.
+James Reidy
+Jan-27 12:35 PM
+Ok - you know best - I'm just casting around
+Brian Caruso
+Jan-27 12:49 PM
+Okay, I'm going to start on the writing the manual dqr2 mapping.
+Here is my plan:
+Brian Caruso
+Jan-27 12:51 PM
+1) each d_ table will create one individual per a row I'll use a url like http://blalba.edu/GloPAD/biblio_author/n3432
+2) for each r_ table with only two f-keys, I'll make a relation
+3) for each r_ table with more keys we'll try for a more complex relation.
+Questions:
+Brian Caruso
+Jan-27 12:53 PM
+What about other types of tables? c_ tables, f_ tables? i_tables, p_ tables, pg_ tables and t_place_affiliation?
+What ontology should we use?
+Are there d_ or r_ tables we should ignore?
+For now we'll ignore _ml tables.
+James Reidy
+Jan-27 12:54 PM
+i_tables I think we can ignore
+Brian Caruso
+Jan-27 12:55 PM
+I'll try to do this and get it in a vitro system from here: http://bdc34-dev.library.cornell.edu:8080/GloPAD
+James Reidy
+Jan-27 12:55 PM
+except that they hold the key to all the other keys
+Brian Caruso
+Jan-27 12:55 PM
+@JimReidy okay
+James Reidy
+Jan-27 12:56 PM
+ok - can you set us up accounts on http://bdc34-dev.library.cornell.edu:8080/GloPAD/
+Brian Caruso
+Jan-27 12:56 PM
+user: root@myDomain.com pw: password
+James Reidy
+Jan-27 12:56 PM
+I'll look at the c_ f_ p_ pg_ t_ tables to see what I can make of them
+Brian Caruso
+Jan-27 12:56 PM
+cool
+James Reidy
+Jan-27 12:58 PM
+the _ml tables are multilingual - translations for things, but can we run this process repeatedly with refinements as we go?
+Brian Caruso
+Jan-27 12:58 PM
+I think we can
+James Reidy
+Jan-27 12:59 PM
+I'm going to make a sandwich and then start in on those tables
+Shinwoo Kim
+Jan-27 1:04 PM
+I tried log in but got 500 error
+Brian Caruso
+Jan-27 1:13 PM
+Ya, get the error and go back to the the home page and you'll be logged in. There is something wrong with the redirect.
+There is no data in the site so it isn't useful in any way yet
+Brian Caruso
+Jan-27 1:45 PM
+Typeid is a problem because it is the pkey of a lot of tables: d_place_type d_altname_type etc.
+James Reidy
+Jan-27 1:48 PM
+ouch. What is another way besides using foreign keys?
+James Reidy
+Jan-27 1:56 PM
+I think the c_ tables are 'constants' - not editable through the GloPAD interface (eg. names of countries, languages, rights statments) . I think they can be treated like any d_ table for our purposes.
+James Reidy
+Jan-27 2:01 PM
+f_ tables can be ignored - they have to do with search indexing
+Brian Caruso
+Jan-27 2:06 PM
+@ShinwooKim also see: http://d2rq.org/d2rq-language#example-join
+James Reidy
+Jan-27 2:12 PM
+p_ tables can be ignored - have to do with a migration from a previous version into the "new" glopad
+Brian Caruso
+Jan-27 2:13 PM
+Good stuff jim
+Jim, do you have a more recent data base dump than the glopad3 stuff?
+James Reidy
+Jan-27 2:15 PM
+I can probably make one now - not likely that there's much difference
+James Reidy
+Jan-27 2:15 PM
+pg_ tables can be ignored - also have to do with search indexing
+James Reidy
+Jan-27 2:20 PM
+t_ and tmp_ tables can be ignored
+James Reidy
+Jan-27 2:22 PM
+v1_ and v2_ tables can be ignored
+Brian Caruso
+Jan-27 2:30 PM
+Jim, what about the views?
+By which I mean, there are 20 or so views in the db, do you know anything about them?
+James Reidy
+Jan-27 2:38 PM
+It looks like we weren't using the views in the code - probably for some other convenience
+Brian Caruso
+Jan-27 2:38 PM
+cool
+James Reidy
+Jan-27 2:45 PM
+Pages like this can help with the paths: http://www.glopad.org/pi/en/explorer/digdoc/1158
+James Reidy
+Jan-27 2:57 PM
+I made a new database dump - 8.1M
+James Reidy
+Jan-27 3:06 PM
+new database dump is on box - you're invited
+Shinwoo Kim
+Jan-27 3:09 PM
+thanks, jim
+James Reidy
+Jan-27 3:44 PM
+http://lukeblaney.co.uk/semweb/theatre
+James Reidy
+Jan-27 3:57 PM
+http://www.essepuntato.it/lode/http://www.eclap.eu/schema...
+Shinwoo Kim
+Jan-27 3:57 PM
+ok, I was working on how to set up the relationships on d2rq
+http://sk274-dev.library.cornell.edu:8080/d2rq
+I set up only two tables there with simple relationship
+Shinwoo Kim
+Jan-27 3:59 PM
+I only set the relationship one way since you can easily get the reverse statement
+db:vocab/performing_arts_pa_group_uri is the relationship
+Brian Caruso
+Jan-27 4:01 PM
+@ShinwooKim cool
+Shinwoo Kim
+Jan-27 4:01 PM
+map:d_performing_arts_pa_group_uri a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_performing_arts;
+    d2rq:property vocab:performing_arts_pa_group_uri;
+    d2rq:refersToClassMap map:d_pa_group;
+    d2rq:join "r_pa_group.paid => d_performing_arts.paid";
+    d2rq:join "d_pa_group.pagroupid <= r_pa_group.pagroupid";
+    .
+is the PropertyBridge I used for that relationship
+Brian Caruso
+Jan-27 4:03 PM
+It seems like we can add this to the script based on the r_ tables with two good f-keys.
+Brian Caruso
+Jan-27 4:04 PM
+Do you want to do that or should I/
+?
+Shinwoo Kim
+Jan-27 4:05 PM
+maybe I can create a perl script that adds this statement to appropriate class map
+Shinwoo Kim
+Jan-27 4:13 PM
+I will try to do the same with 3 foreign keys relationships
+Brian Caruso
+Jan-27 4:24 PM
+@ShinwooKim Checkout "d2rq:dynamicProperty A URI pattern that is used to generate the property URI at runtime. If multiple d2rq:dynamicProperty are specified, then one triple with each property is generated per resource. #"
+Shinwoo Kim
+Jan-27 4:25 PM
+ok, thanks
+Brian Caruso
+Jan-27 5:00 PM
+So here is what Shinwoo and I have cooked up: http://bdc34-dev.library.cornell.edu:8080/d2rq/page/d_digdoc/1003610
+That is the page for http://www.glopad.org/pi/en/explorer/digdoc/1003610
+You can see the relations but they are a bit less clear.
+We'll have to work on it more tomorrow.
+Brian Caruso
+Jan-27 5:01 PM
+@JimReidy What do you think?
+James Reidy
+Jan-27 5:02 PM
+great progress... Sorry I can't help more.
+January 28, 2015
+James Reidy
+Jan-28 9:02 AM
+I'm working out the affid stuff
+Brian Caruso
+Jan-28 9:20 AM
+Jim, are you going to webex into the meeting?
+James Reidy
+Jan-28 9:25 AM
+Yes I'll webex.
+James Reidy
+Jan-28 9:25 AM
+r_component_geographic_affiliation | ignore
+r_pa_geographic_affiliation | paid -> d_performing_arts | affid -> d_pa_geographic_affiliation
+r_person_geographic_affiliation | personid -> d_person | affid -> d_person_geographic_affiliation
+r_piece_affiliation | pieceid -> d_piece | affid -> d_piece_affiliation
+r_place_affiliation | placeid -> d_place | affid -> d_place_affiliation
+t_place_affiliation | ignore
+James Reidy
+Jan-28 9:25 AM
+these are the affid fields
+Shinwoo Kim
+Jan-28 9:29 AM
+good morning!
+James Reidy
+Jan-28 9:30 AM
+Hi. I'm at the meeting
+Brian Caruso
+Jan-28 9:30 AM
+Did I join the wrong meeting or something?
+Shinwoo Kim
+Jan-28 9:31 AM
+I think you may have to call in using your computer
+on the lower right corner, do you see the "audio" button?
+Brian Caruso
+Jan-28 9:31 AM
+I have webex open and I'm on meeting number 640 444 394.
+James Reidy
+Jan-28 10:04 AM
+Hi - I'll be back after I move my car.
+Shinwoo Kim
+Jan-28 10:24 AM
+I have created the 3 foreign keys relationship in my dev vm using dynamicProperty as Brian suggested
+Brian Caruso
+Jan-28 10:24 AM
+super cool
+Shinwoo Kim
+Jan-28 10:24 AM
+as with others, we should modify the property to match some ontology we might be using
+here is a good example
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_person/1001634
+Brian Caruso
+Jan-28 10:25 AM
+awesome!
+Shinwoo Kim
+Jan-28 10:25 AM
+and this is the mapping code I used
+map:d_person_d_function_d_digdoc a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_person;
+    d2rq:dynamicProperty "http://function/@@d_function.function@@";
+    d2rq:refersToClassMap map:d_digdoc;
+    d2rq:join "d_person.personid <= r_digdoc_person.personid";
+    d2rq:join "d_digdoc.digdocid <= r_digdoc_person.digdocid";
+    d2rq:join "d_function.functionid <= r_digdoc_person.functionid";
+    .
+Shinwoo Kim
+Jan-28 10:27 AM
+@BrianCaruso as this can't be automated in efficient way, could you give me a list of all 3 foreign keys relationships we have?
+Brian Caruso
+Jan-28 10:27 AM
+Yes, let me get it.
+Shinwoo Kim
+Jan-28 10:27 AM
+thanks
+Brian Caruso
+Jan-28 10:28 AM
+Here are tables with functionid:
+r_component_person_associated,componentid,personid,functionid
+r_sourceobject_person,sourceobjectid,personid,functionid
+r_place_creator,pieceid,personid,functionid
+r_component_person_represented,componentid,personid,functionid
+r_pa_person,paid,personid,functionid
+r_pa_group_person,pagroupid,personid,functionid
+r_digdoc_person,digdocid,personid,functionid
+r_pacopy_personcopy,paid,personid,functionid
+r_piece_creator,pieceid,personid,functionid
+Shinwoo Kim
+Jan-28 10:29 AM
+thanks
+Brian Caruso
+Jan-28 10:29 AM
+I think there might be more and I'll get back to you in a min.
+Shinwoo Kim
+Jan-28 10:29 AM
+ok
+Brian Caruso
+Jan-28 10:31 AM
+Actually, that looks like it for the d_function table.
+Shinwoo Kim
+Jan-28 10:31 AM
+ok, thanks
+Brian Caruso
+Jan-28 10:31 AM
+There are these
+
+Complex r_ table with more than 3 forign keys:
+r_performance_person,performanceid,personid,functionid,instrumentid,roleid,characterid
+r_production_creator,productionid,personid,functionid,roleid
+but they are more than 3 and we should do something else with them.
+Shinwoo Kim
+Jan-28 10:32 AM
+do you think it makes more sense to use blank nodes for them?
+Brian Caruso
+Jan-28 10:36 AM
+That would be fine. I frequently don't use bnodes for this sort of thing to make some technical details easier.
+Ya, bnodes would be easier since there is no pkey
+Shinwoo Kim
+Jan-28 10:39 AM
+ok, thanks
+James Reidy
+Jan-28 10:39 AM
+Are there any unknown keys/tables/relationships you want tracked down?
+Shinwoo Kim
+Jan-28 10:40 AM
+so far, the key id's are named consistently so we can track down where the originating table is even though the relation table name might not suggest that
+e.g., r_place_creator,pieceid,personid,functionid
+there is no d_place table :)
+James Reidy
+Jan-28 10:41 AM
+Ok, also ontologies - I looked for some yesterday
+James Reidy
+Jan-28 10:42 AM
+r_place_affiliation | placeid -> d_place | affid -> d_place_affiliation
+t
+Shinwoo Kim
+Jan-28 10:43 AM
+oh, I take that back, there is d_place table ;)
+James Reidy
+Jan-28 10:43 AM
+I see a d_place and a d_place_affiliation
+James Reidy
+Jan-28 10:43 AM
+we were very thorough!
+Shinwoo Kim
+Jan-28 10:44 AM
+yes :)
+but something's funny about r_place_creator as it is keyed off to pieceid
+James Reidy
+Jan-28 10:46 AM
+0 records - ignore it
+Shinwoo Kim
+Jan-28 10:46 AM
+ok
+James Reidy
+Jan-28 10:47 AM
+should we ignore all tables with 0 records? I can make a list
+Brian Caruso
+Jan-28 10:47 AM
+I just made that list.
+I was thinking that we could
+
+empty tables: 
+r_biblio_correspondence,biblioid,correspondenceid
+r_biblio_type_of_manuscript,biblioid,typeofmanuscriptid
+r_place_structure_division,pieceid,structuredivisionid
+r_place_creator,pieceid,personid,functionid
+r_performance_component,performanceid,componentid
+r_pa_performance,performanceid,paid
+r_digdoc_piece,digdocid,pieceid
+r_person_institution,personid,institutionid
+r_registration_referral,registrationid,referralid
+r_biblio_identifier,biblioid,identifiertypeid,identifiervalue,pagenum
+r_production_variation,productionid,variationid
+r_production_language,productionid,languageid
+r_component_geographic_affiliation,componentid,affid
+r_performance_pa,performanceid,paid
+r_production_costume,productionid,costumemaskid
+r_person_group,p
+...
+Show full text
+Brian Caruso
+Jan-28 10:48 AM
+@JimReidy Here is something you could do for us: for each d_ table, figure out which column of that table should be its label/title/name.
+James Reidy
+Jan-28 10:49 AM
+ok good. Should I look for an ontology for the person functions now or is it best to wait till the whole shebang is in vitro?
+Brian Caruso
+Jan-28 10:49 AM
+We could use this in a spreadsheet: "tablename,labelcolumn"
+Let's wait until we at least get a couple more things worked out. Maybe this after noon we can revsit the question.
+James Reidy
+Jan-28 10:50 AM
+not sure what you mean by labelcolumn
+Brian Caruso
+Jan-28 10:51 AM
+column of tabel that we should use as the human readable label. rdfs:label is human-readable version of the resource's name and a lot of sem-web software makes good use of it.
+James Reidy
+Jan-28 10:51 AM
+d_associated_movement | Associated Movement(s)
+Brian Caruso
+Jan-28 10:52 AM
+@JimReidy no
+d_associated_movement | associatedmovement
+James Reidy
+Jan-28 10:52 AM
+Oh - I see - to identify the record of a table, use this field in the table
+Brian Caruso
+Jan-28 10:52 AM
+tablename | column_on_table_that_with_human_name
+ya
+James Reidy
+Jan-28 10:53 AM
+so the human name identifies which record in the table for the poor humans
+Brian Caruso
+Jan-28 10:53 AM
+which column
+Each row represents a person/performance/place
+James Reidy
+Jan-28 10:54 AM
+right - I got it. I'll make a list.
+Brian Caruso
+Jan-28 10:54 AM
+one of those columns is a "human readable name"
+cool
+Shinwoo Kim
+Jan-28 11:07 AM
+r_biblio_author has 3 foreign keys but all rows have authortypeid empty
+should we treat it as 2 foreign keys relationship?
+because the authortypeid is always empty, we won't be showing any of the relationship defined in that table if we use 3 foreign keys scheme
+Shinwoo Kim
+Jan-28 11:09 AM
+and while we are on this subject, how should we treat this multi-foreign keys relations where some rows have only some keys defined but not all?
+r_component_person_associated has some rows defining all 3 keys while some only define componentid and personid leaving functionid blank
+Brian Caruso
+Jan-28 11:10 AM
+I think it would be fine to make a rdf resource with say 4 of the 5 relations.
+It would indicate that the person was associated to the component but it would leave it unclear how.
+Shinwoo Kim
+Jan-28 11:11 AM
+in the 3 foreign keys cases, we could do both normal 3 keys and conditional 2 keys if that column is empty
+Brian Caruso
+Jan-28 11:12 AM
+Maybe the property between the person and the resource could be dynamic with the function in this case but somehow fall back to a generic "associated" if therre was no function id.
+Also, we could populate the null r_component_person_associated.functionid columns with an id for some generic function.
+(as an easy way to get it done)
+Shinwoo Kim
+Jan-28 11:13 AM
+I will try that
+and use some static vocabulary for that for now
+Shinwoo Kim
+Jan-28 11:29 AM
+ok, here is an example
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_person/148
+it will show both the case where the functionid is defined and it is not
+the property http://function/Playwright is dynamicProperty fromthe database and db:vocab/worked_on_component is the static one I added if functionid is null
+map:r_component_person_associated a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_person;
+    d2rq:dynamicProperty "http://function/@@d_function.function@@";
+    d2rq:refersToClassMap map:d_component;
+    d2rq:join "d_person.personid <= r_component_person_associated.personid";
+    d2rq:join "d_component.componentid <= r_component_person_associated.componentid";
+    d2rq:join "d_function.functionid <= r_component_person_associated.functionid";
+    .
+map:r_component_person_associated_partial a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_person;
+    d2rq:property vocab:worked_on_component;
+    d2rq:condition "r_component_person_associated.functionid is null";
+    d2rq:refersToClassMap map:d_component;
+    d2rq:join "
+...
+Show full text
+Brian Caruso
+Jan-28 11:35 AM
+Looks great. I was a little worried when I started browsing around but then I realized that you only had test set of tables mapped.
+Shinwoo Kim
+Jan-28 11:36 AM
+I am adding as I go through :)
+James Reidy
+Jan-28 12:32 PM
+ table_col_human_name.xlsx 40.9 KB
+here are the human name fields
+Brian Caruso
+Jan-28 1:04 PM
+Thanks Jim, I'm working on the affiliations you mentioned early today.
+Shinwoo Kim
+Jan-28 1:05 PM
+is r_pacopy_personcopy a real table?
+it has one row with 
+select * from r_pacopy_personcopy;
+paid | personid | functionid 
+------+----------+------------
+1 | 2 | 3
+James Reidy
+Jan-28 1:06 PM
+I'll check the code...
+Shinwoo Kim
+Jan-28 1:06 PM
+thanks
+James Reidy
+Jan-28 1:09 PM
+not used - also ignore d_personcopy, d_personcopy_ml
+Shinwoo Kim
+Jan-28 1:09 PM
+ok, thanks!
+Shinwoo Kim
+Jan-28 1:26 PM
+I think I have added all the three foreign keys relationships
+some examples
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_person/1001634
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_performance/100
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_biblio_author...
+Shinwoo Kim
+Jan-28 1:29 PM
+I have added the mapping file to box.
+James Reidy
+Jan-28 1:31 PM
+I'll take a look.
+James Reidy
+Jan-28 1:32 PM
+How can you tell it to use db:vocab/d_biblio_author_author for rdfs:label in your last example
+Shinwoo Kim
+Jan-28 1:34 PM
+for d_biblio_author mappings, there would be this entry
+map:d_biblio_author_author a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_biblio_author;
+d2rq:property vocab:d_biblio_author_author;
+d2rq:propertyDefinitionLabel "d_biblio_author author";
+d2rq:column "d_biblio_author.author";
+.
+you will need to change the line that says d2rq:property vocab:d_biblio_author_author;
+Shinwoo Kim
+Jan-28 1:37 PM
+Could you check http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_biblio_author... again and tell me if that's what you wanted?
+James Reidy
+Jan-28 1:38 PM
+It has two rdfs:label fields - @BrianCaruso is that right or should it be just one?
+Brian Caruso
+Jan-28 1:41 PM
+One works better but two isn't incorrect.
+James Reidy
+Jan-28 1:42 PM
+I assume this is how you'll be adding those human names.
+Brian Caruso
+Jan-28 1:42 PM
+Ya, I think we have to filter out the d2rq automattically created names and add our hand written names.
+James Reidy
+Jan-28 1:43 PM
+do we want table names also?
+James Reidy
+Jan-28 1:44 PM
+(descriptive names for the tables themselves, like in i_table_info)
+Brian Caruso
+Jan-28 1:44 PM
+Ya, that would be rdf:types
+Shinwoo Kim
+Jan-28 1:49 PM
+I will try to work with relationships that have more than 3 foreign keys
+James Reidy
+Jan-28 1:51 PM
+Once I get started I was going to take a crack at d_date
+Brian Caruso
+Jan-28 1:57 PM
+Okay, I've got the affiliations done.
+http://bdc34-dev.library.cornell.edu:8080/d2rq/page/d_place_affiliation<...
+I'm going to work on labels, then trying to unify what Shinwoo and I have done.
+James Reidy
+Jan-28 2:00 PM
+Great - let me know if I can help somehow. I'm still trying to get my d2rq environment set up (close though!)
+James Reidy
+Jan-28 2:00 PM
+Is this all going to just slip into VITRO without a struggle?
+Brian Caruso
+Jan-28 2:01 PM
+There is likely to be a bit of a struggle as it was in flux when I left and they were moving away from what I was familiar with.
+James Reidy
+Jan-28 3:09 PM
+How would you handle this situation: d_date has a 'granularity' field that determines how to use the other fields in a record. The code might look up something in another table (name of an era) or use other fields in the record to make a displayable date, depending on the value of the granularity.
+Brian Caruso
+Jan-28 3:41 PM
+I have the convert script in here: git clone ssh://YOURNETID@bdc34-dev.library.cornell.edu/lib-dev/src/glopadRdf 
+Shinwoo Kim
+Jan-28 3:41 PM
+thanks!
+Brian Caruso
+Jan-28 3:41 PM
+@JimReidy
+I don't really know, can we have more details?
+Brian Caruso
+Jan-28 3:43 PM
+@JimReidy What does the 'forHumans' field mean in the spreadsheet?
+Brian Caruso
+Jan-28 3:44 PM
+Oh, I get it, it is filled out when it isn't ignore
+James Reidy
+Jan-28 3:44 PM
+yes - the third col of the spreadsheet is the column name that has the human readable description of the record
+James Reidy
+Jan-28 3:45 PM
+in the table named in the first col
+James Reidy
+Jan-28 3:49 PM
+There is a piece of code in glopad that checks the d_date.dategran for binary flags. Depending on the presence of flags it interprets the date as a century, era, start of date range, end of date range, etc.
+James Reidy
+Jan-28 3:50 PM
+I was looking at d2rq:Translation to at least code the dategran value
+James Reidy
+Jan-28 3:51 PM
+but I don't know how to set up the d2rq:rdfValue since the only example is :Color and I don't know if that is a known thing or an arbitrary thing
+Shinwoo Kim
+Jan-28 4:06 PM
+I tried to get the r2dq mapping generator to map the relationships with multiple foreign keys on a set of dummy tables
+I think it does very simple thing and creates mapping between each foreign keys separately but does not create union of them
+I probably am not making much sense...
+Brian Caruso
+Jan-28 5:01 PM
+I almost have labels working.
+Shinwoo Kim
+Jan-28 5:02 PM
+great!
+James Reidy
+Jan-28 5:04 PM
+is http://bdc34-dev.library.cornell.edu:8080/d2rq shut now?
+Brian Caruso
+Jan-28 5:27 PM
+Labels are up:
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/directory/d_character
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/directory/d_person
+@JimReidy It was up and down for a bit
+James Reidy
+Jan-28 5:29 PM
+ok - I was using an old url anyway.
+James Reidy
+Jan-28 5:29 PM
+I'm see our old test people: http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/page/d_person/115
+James Reidy
+Jan-28 5:29 PM
+cool
+Brian Caruso
+Jan-28 5:30 PM
+How did you work on the mapping generator go?
+James Reidy
+Jan-28 5:30 PM
+I got it going and started in on the d_date table
+James Reidy
+Jan-28 5:32 PM
+I'm adding to what Shinwoo built, using it for reference etc. It's nice these can be combined so easily.
+Brian Caruso
+Jan-28 5:33 PM
+I'm going to check a bunch of stuff in to git
+James Reidy
+Jan-28 5:34 PM
+That's good - we can work off the same .ttl
+Brian Caruso
+Jan-28 5:35 PM
+Ya, the perl script glopad-table-analysis.pl (username) (password) does the whole transform and then adds the lables and Shinwoo's stuff.
+James Reidy
+Jan-28 5:36 PM
+cool. It looks like I can do the conditional adding of relations to d_date using d2rq:condition
+James Reidy
+Jan-28 5:37 PM
+unless that would be better added to http://glopad-table-analysis.pl/
+James Reidy
+Jan-28 5:37 PM
+(dont know why it added the http:// there!)
+Brian Caruso
+Jan-28 5:38 PM
+You can get them to me and I'll add them tomorrow.
+January 29, 2015
+Brian Caruso
+Jan-29 9:44 AM
+Okay! What are people in the mood for today?
+Shinwoo Kim
+Jan-29 9:44 AM
+I will finish setting up the r_performance_person and r_production_creator relationships
+James Reidy
+Jan-29 9:44 AM
+I'm sill on d_date - learning translation table
+James Reidy
+Jan-29 9:45 AM
+Can we add the images at some point?
+Brian Caruso
+Jan-29 9:46 AM
+@JimReidy We can try. To the images have stable URL that we can add?
+James Reidy
+Jan-29 9:46 AM
+The image and thumbnail paths just need a prefix to point to the right image.
+Brian Caruso
+Jan-29 9:46 AM
+@ShinwooKim Cool
+James Reidy
+Jan-29 9:50 AM
+What will we need to do to make a decent presentation in vitro?
+Brian Caruso
+Jan-29 9:51 AM
+I'm going to work on the type d_*_type to add rdf:types to resources. Then I'm going to load stuff into vitro.
+James Reidy
+Jan-29 9:51 AM
+Can vitro do anything with the images?
+Brian Caruso
+Jan-29 9:51 AM
+@JimReidy loading images into vitro is tricky. I'll see if there is are some docs.
+Ya, a resource can have an image (maybe more than one?)
+James Reidy
+Jan-29 9:51 AM
+We could also just link to the urls
+Brian Caruso
+Jan-29 9:52 AM
+Ya,
+Here is a page and the person image is just an image in vivo: http://vivo.cornell.edu/display/individual20520
+@JimReidy What about the glopad relationships graph with digdocs having part of relations?
+James Reidy
+Jan-29 9:54 AM
+it looks like the image is copied in to vivo
+James Reidy
+Jan-29 9:54 AM
+http://vivo.cornell.edu/file/n5526/_main_image_camille_andrews.jpg
+
+
+Brian Caruso
+Jan-29 9:54 AM
+Ya, vitro serves the image
+We could link to it.
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/page/d_digdoc/1874
+I see a db:vocab/d_digdoc_digdocid
+Is that digdoc to digdoc relation?
+James Reidy
+Jan-29 9:56 AM
+I'll check it out. Not sure what you mean by 'digdocs having part of relations'
+Brian Caruso
+Jan-29 9:56 AM
+I've made change to the glopad-table-analysis.pl and pushed them.
+James Reidy
+Jan-29 9:56 AM
+where is the git repo?
+Brian Caruso
+Jan-29 9:56 AM
+@JimReidy The April 28 2004 graph
+I have the convert script in here: git clone ssh://YOURNETID@bdc34-dev.library.cornell.edu/lib-dev/src/glopadRdf
+James Reidy
+Jan-29 9:57 AM
+I don;t have a password for that
+Brian Caruso
+Jan-29 9:57 AM
+you should use your net id and server farm password
+What is your netid?
+James Reidy
+Jan-29 9:57 AM
+Oh - ok
+James Reidy
+Jan-29 9:58 AM
+jgr25
+Brian Caruso
+Jan-29 9:59 AM
+Let me know if it doesn't work for you because, well crap, it looks like you don't have an account on this server.
+The April 28 2004 graph "Glopad Relationships" has a big oval at the top left,
+s/left/right/
+Then in the bottom right it says "D is part of C"
+This makes me think that a "digital object" can have parts
+And those parts can be "source objects" "performance" or "component"
+Shinwoo Kim
+Jan-29 10:01 AM
+I am off to meeting but here's my first stab
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/r_production_creator...
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/r_performance_person...
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_person/999
+Brian Caruso
+Jan-29 10:03 AM
+Looks good.
+James Reidy
+Jan-29 10:05 AM
+http://www.glopad.org/pi/en/explorer/digdoc/1874
+James Reidy
+Jan-29 10:13 AM
+Component represented in digital object is the r_digdoc_component
+James Reidy
+Jan-29 10:14 AM
+Production associated with digital object is the r_digdoc_production
+James Reidy
+Jan-29 10:17 AM
+Here is a digdoc with a source object: http://www.glopad.org/pi/en/explorer/digdoc/1002905
+James Reidy
+Jan-29 10:22 AM
+It looks like you've got the source object: http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/page/d_source_object...
+Brian Caruso
+Jan-29 10:29 AM
+@JimReidy Different subject: What table should d_digdoc.typeid point to?
+James Reidy
+Jan-29 10:31 AM
+It's allways NULL so no need to include it.
+Brian Caruso
+Jan-29 11:09 AM
+@JimReidy Is t_place_affiliation just testing and should be ignored?
+James Reidy
+Jan-29 11:10 AM
+yes - it was a migration table that is not used in the code
+Shinwoo Kim
+Jan-29 11:15 AM
+# Table r_performance_person
+map:r_performance_person a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "r_performance_person/@@r_performance_person.r_performance_person_id@@";
+    d2rq:class vocab:r_performance_person;
+    d2rq:classDefinitionLabel "r_performance_person";
+    .
+
+# Table r_production_creator
+map:r_production_creator a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "r_production_creator/@@r_production_creator.productionid@@/@@r_production_creator.personid@@";
+    d2rq:class vocab:r_production_creator;
+    d2rq:classDefinitionLabel "r_production_creator";
+    .
+
+map:br_performance_person_performanceid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:r_performance_person;
+    d
+...
+Show full text
+that is the code I used for the r_performance_person and r_production_creator relationships
+I stripped out most stuff from those r_ tables as they don't have much meaning by themselves
+Brian Caruso
+Jan-29 11:16 AM
+@ShinwooKim should I just add it to the script?
+Shinwoo Kim
+Jan-29 11:16 AM
+in the definition, I mean
+@BrianCaruso yes
+James Reidy
+Jan-29 11:16 AM
+Should I ask Alan to set up a repo for this on github?
+Shinwoo Kim
+Jan-29 11:18 AM
+I think that would be a good idea
+James Reidy
+Jan-29 11:20 AM
+named cul-id/glopad-rdf ?
+Shinwoo Kim
+Jan-29 11:21 AM
+that sounds good to me
+Brian Caruso
+Jan-29 11:21 AM
+cul-it?
+Sounds good to me
+James Reidy
+Jan-29 11:21 AM
+I mean cul-it/glopad-rdf
+Shinwoo Kim
+Jan-29 11:54 AM
+I will start looking for good visualizer for our awesome rdf data!
+Brian Caruso
+Jan-29 11:54 AM
+I'm starting work on loading the data into vitro.
+First I have to make an ontology. I plan to automatically generate one with the jena tool schemagen
+James Reidy
+Jan-29 11:56 AM
+Want to add in my d_date stuff at some point?
+Brian Caruso
+Jan-29 11:56 AM
+@JimReidy sure!
+James Reidy
+Jan-29 11:57 AM
+It's not done but what's there works - I'll email it.
+Brian Caruso
+Jan-29 11:57 AM
+Okay
+Brian Caruso
+Jan-29 12:55 PM
+@ShinwooKim We need to change dynamic props to not have spaces.
+Maybe we can create a view or an additional column in d_function?
+Shinwoo Kim
+Jan-29 12:56 PM
+hmm...
+Brian Caruso
+Jan-29 12:57 PM
+oh... check this: http://d2rq.org/d2rq-language#dfn-uri-pattern
+Shinwoo Kim
+Jan-29 12:58 PM
+I think |urlify would look the best
+Brian Caruso
+Jan-29 12:58 PM
+I'll add that.
+Shinwoo Kim
+Jan-29 12:58 PM
+ok, thanks
+James Reidy
+Jan-29 1:52 PM
+@ShinwooKim do you know why d_digdoc_thumburl is not showing up in the Property/Value list under All_d_digdoc?
+Shinwoo Kim
+Jan-29 1:55 PM
+@JimReidy is there some specific example record you are looking at?
+I think some rows don't have that field defined while others do
+http://sk274-dev.library.cornell.edu:8080/d2rq/page/d_digdoc/1003737
+has that thumburl field but 100 doesn't
+James Reidy
+Jan-29 1:56 PM
+duh! sorry about that!
+Shinwoo Kim
+Jan-29 1:57 PM
+no problem ;)
+James Reidy
+Jan-29 2:19 PM
+add these to the end of the d_digdoc table to get image urls for full and thumbnail:
+James Reidy
+Jan-29 2:19 PM
+map:d_digdoc_thumburl_image a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_digdoc;
+d2rq:property vocab:d_digdoc_thumburl_image;
+d2rq:propertyDefinitionLabel "d_digdoc thumburl image";
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/', d_digdoc.thumburl::text)";
+d2rq:condition "length(trim(d_digdoc.thumburl)) <> 0";
+.
+map:d_digdoc_url_image a d2rq:PropertyBridge;
+d2rq:belongsToClassMap map:d_digdoc;
+d2rq:property vocab:d_digdoc_url_image;
+d2rq:propertyDefinitionLabel "d_digdoc fullimage image";
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/', d_digdoc.url::text)";
+d2rq:condition "length(trim(d_digdoc.url)) <> 0";
+.
+
+Show full text
+James Reidy
+Jan-29 2:23 PM
+example: /page/d_digdoc/1003610
+James Reidy
+Jan-29 3:18 PM
+https://github.com/cul-it/glopad-rdf
+	
+cul-it/glopad-rdf
+James Reidy
+Jan-29 3:18 PM
+git repo for this stuff
+Brian Caruso
+Jan-29 3:33 PM
+I've pushed the stuff to the git repo.
+James Reidy
+Jan-29 3:36 PM
+wow - lotta stuff!
+James Reidy
+Jan-29 3:55 PM
+what happens to webapp/WEB-INF/mapping.ttl after it's built?
+Brian Caruso
+Jan-29 4:00 PM
+you can do $ant war to build a war file and then deploy it in tomcat.
+Brian Caruso
+Jan-29 4:01 PM
+I'm having problems with %2F in URIs...maybe other encoded stuff too...
+James Reidy
+Jan-29 4:02 PM
+as in any/url ?
+Brian Caruso
+Jan-29 4:03 PM
+ya
+James Reidy
+Jan-29 4:16 PM
+I don't have tomcat on my machine. can mapping.ttl stay around?
+James Reidy
+Jan-29 4:24 PM
+getting tomcat
+Brian Caruso
+Jan-29 4:25 PM
+I"m going to alter the table to get rid of the bad chars.
+the rdf/xml can be found here: bdc34-dev:/lib-dev/vitro-glopad/lopad-ont.rdf
+okay, that file is still broken.
+@JimReidy you can also run d2rq-server
+James Reidy
+Jan-29 4:27 PM
+right from the git repo?
+Brian Caruso
+Jan-29 4:27 PM
+sure
+James Reidy
+Jan-29 4:28 PM
+how does it know my database?
+Brian Caruso
+Jan-29 4:29 PM
+It's in the mapping?
+James Reidy
+Jan-29 4:30 PM
+I'll try it out and see what happens. I had to change the original .ttl to make it work.
+Shinwoo Kim
+Jan-29 4:30 PM
+in the ttl mapping file, at the top section, there should be your site info
+James Reidy
+Jan-29 4:31 PM
+.//webapp/WEB-INF/dataset-metadata.ttl
+.//webapp/WEB-INF/resource-metadata.ttl
+which?
+Shinwoo Kim
+Jan-29 4:31 PM
+in your webapp/WEB-INF/web.xml
+at the top, you specify which ttl file to use
+then when you run ant war, it gets things as you have set up
+James Reidy
+Jan-29 4:31 PM
+Oh - thanks!
+Shinwoo Kim
+Jan-29 4:32 PM
+if your ttl file is in that webapp/WEB-INF directory, you can just use the file name for your ttl
+James Reidy
+Jan-29 4:32 PM
+what directory do I run ant war ing?
+Shinwoo Kim
+Jan-29 4:32 PM
+d2rq home directory
+James Reidy
+Jan-29 4:38 PM
+woo hoo - I got tomcat now
+Shinwoo Kim
+Jan-29 4:38 PM
+great
+James Reidy
+Jan-29 4:41 PM
+Mary-Beth wants one of us to present at the meeting tomorrow. Any volunteers?
+Shinwoo Kim
+Jan-29 4:42 PM
+maybe Brian and I can both present?
+Brian Caruso
+Jan-29 4:42 PM
+What time is suppose to be at?
+Shinwoo Kim
+Jan-29 4:42 PM
+wrap up meeting is at 2PM
+James Reidy
+Jan-29 4:42 PM
+2-4 pm
+Brian Caruso
+Jan-29 4:47 PM
+Sounds good
+Brian Caruso
+Jan-29 4:49 PM
+I've downloaded a tool called pellet
+and I'm using this command to go for our pile of rdf statemetns to rdf statemetns with an ontology
+bdc34@bdc34-dev:pellet-2.3.0$ ./pellet.sh lint -v -only RDF -f /lib-dev/vitro-glopad/lopad-ont.rdf ~/glopadRdf/glopad-dump.n3 > /lib-dev/vitro-glopad/glopadLint.out
+Brian Caruso
+Jan-29 4:50 PM
+Vitro usually needs the properties defined to work well.
+Brian Caruso
+Jan-29 4:57 PM
+I'm removing the feature where we add some rdf:types using some type types like d_component_type
+James Reidy
+Jan-29 5:22 PM
+Tomorrow I'll try to get the .war file to run - have tomcat setup now but FAIL - Application at context path /d2rq could not be started
+Brian Caruso
+Jan-29 5:23 PM
+I usually restart tomcat and then do $tail -f tomcat/logs* to see what the errors are.
+James Reidy
+Jan-29 5:23 PM
+It's unlikely that the database credentials are in the .git anyway so I'll need to figure out where to put them also
+Brian Caruso
+Jan-29 5:24 PM
+They should be at the top of your generated webapp/WEB-INF/mapping.ttl file.
+They get added by the glopad-table-analysis.pl
+you need to run that like
+James Reidy
+Jan-29 5:24 PM
+After ant war I don't have mapping.ttl file
+Brian Caruso
+Jan-29 5:24 PM
+./glopad-table-analysis.pl dbuser dbpwd
+it should be there after the perl script
+James Reidy
+Jan-29 5:25 PM
+so ant war doesn't run the perl script - I didn't know that
+James Reidy
+Jan-29 5:26 PM
+this is all new - please bear with me
+Brian Caruso
+Jan-29 5:26 PM
+no problem, we are innovating!
+James Reidy
+Jan-29 5:26 PM
+I feel more like living dead!
+James Reidy
+Jan-29 5:45 PM
+Having to install perl....................................................
+January 30, 2015
+James Reidy
+9:00 AM
+perlbrew, Dump::Dump, Class::Inspector, DBI, DBD::Pg
+James Reidy
+9:00 AM
+Successfully installed DBI-1.633
+! Installing the dependencies failed: Module 'DBI' is not installed
+! Bailing out the installation for DBD-Pg-3.5.0.
+1 distribution installed
+James Reidy
+9:03 AM
+jamess-air:glopad-rdf jgr25$ cpanm DBD::Pg
+--> Working on DBD::Pg
+Fetching http://www.cpan.org/authors/id/T/TU/TURNSTEP/DBD-Pg-3.5.0... ... OK
+==> Found dependencies: DBI
+--> Working on DBI
+Fetching http://www.cpan.org/authors/id/T/TI/TIMB/DBI-1.633.tar.gz ... OK
+Configuring DBI-1.633 ... OK
+Building and testing DBI-1.633 ... OK
+Succ
+...
+Show full text
+James Reidy
+9:42 AM
+I'm giving up on installing perl support for glopad-table-analysis.pl on my machine.
+James Reidy
+9:44 AM
+Maybe I can work on some sparql queries to duplicate some common Glopad pages based on the rdf?
+Shinwoo Kim
+9:52 AM
+@JimReidy I tried installing DBD::Pg on my vm using:
+sudo perl -MCPAN -e shell
+> install DBD::Pg
+it then asked for path to pg_config
+which I had to install the pg dev libraries first
+then it installed successfully
+James Reidy
+9:55 AM
+Mine installs but then can't find DBI. I'll see if there is a pg_config for macos somewhere.
+James Reidy
+10:06 AM
+Something is happening (I had to start up the Postgres App and add it to $PATH)
+James Reidy
+10:09 AM
+Cool - I got halfway through ./glopad-table-analysis.pl - thanks.
+Shinwoo Kim
+10:09 AM
+great!
+James Reidy
+10:10 AM
+
+./generate-mapping -o glopad-mapping.ttlpass1 -u jgr25 -p --skip-tables @skiptables.txt -d org.postgresql.Driver jdbc:postgresql:glopad
+Too many arguments
+James Reidy
+10:10 AM
+looks like I need a pw
+James Reidy
+10:23 AM
+I've got D2R Server running with the generated glopad-mapping.ttl on macosx!
+Shinwoo Kim
+10:24 AM
+great!
+James Reidy
+10:25 AM
+If I start to target http://localhost:2020/sparql with queries will the same queries apply to the eventual vitro setup?
+Brian Caruso
+10:59 AM
+Ya, they should.
+I'm working on getting the URIs correct so it can be loaded into vitro or other stuff.
+Shinwoo Kim
+11:46 AM
+here's my first shot at the visualization, thanks Brian for finding it!
+http://sk274-dev.library.cornell.edu/glopad/?http://sk274-dev.libra...
+Brian Caruso
+11:47 AM
+Cool, can I send you a new mapping?
+James Reidy
+11:50 AM
+Josh has more roles than a baker!
+Shinwoo Kim
+11:51 AM
+yes
+and yes :)
+Brian Caruso
+11:51 AM
+new ttl file:
+bdc34-dev:/tmp/mapping.ttl
+Shinwoo Kim
+11:52 AM
+thanks!
+James Reidy
+11:53 AM
+does it have links to the images? (I added 2 map: sections above for that)
+Shinwoo Kim
+11:53 AM
+my mapping is outdated
+I will use the new mapping now
+Brian Caruso
+11:53 AM
+I didn't add that yet. I'll add it now.
+Brian Caruso
+11:56 AM
+@ShinwooKim do I need to do anything special to get images to show up in lodlive?
+Shinwoo Kim
+11:57 AM
+I don't know
+Brian Caruso
+11:58 AM
+@ShinwooKim New mapping at bdc34-dev:/tmp/mapping.ttl with Jim's image stuff
+Shinwoo Kim
+11:59 AM
+@JimReidy I have updated the mapping file, do you have an example that has images?
+James Reidy
+11:59 AM
+http://www.glopad.org/pi/en/record/digdoc/2020
+Brian Caruso
+12:01 PM
+The uris might have a different format
+Shinwoo Kim
+12:02 PM
+ok, I'll try again Brian
+James Reidy
+12:03 PM
+I can't get to bdc34-dev:/tmp/mapping.ttl - how to connect?
+Brian Caruso
+12:04 PM
+My d2rq system is here: http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/page/d_digdoc/218
+@JimReidy I can email it to you
+@ShinwooKim It looks like my mapping is messedup.
+Shinwoo Kim
+12:07 PM
+my d2rq is corrupted now
+Brian Caruso
+12:07 PM
+@ShinwooKim sorry, I'll back those changes out.
+Shinwoo Kim
+12:08 PM
+@Brian no problem
+Brian Caruso
+12:16 PM
+@ShinwooKim Okya, that was easy, try the new mapping.
+Shinwoo Kim
+12:17 PM
+@BrianCaruso will do
+Shinwoo Kim
+12:19 PM
+are you using the new glopad database dump?
+Brian Caruso
+12:19 PM
+No, not yet, should I/
+?
+Shinwoo Kim
+12:19 PM
+never mind, maybe my postgresql is acting weird
+Brian Caruso
+12:20 PM
+Okay, I should have the new mapping up
+Brian Caruso
+12:21 PM
+@JimReidy CAn yo look at http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/
+and see if you can find a place where there should be an image?
+Brian Caruso
+12:26 PM
+@JimReidy Does that thumbnail stuff work for you? It is giving us errors.
+Shinwoo Kim
+12:29 PM
+I am probably the only one using the postgresql 8.4.20 and I think that is the problem
+I will try to connect to Brian's postgresql or d2rq
+Brian Caruso
+12:32 PM
+@ShinwooKim I've got lodlive on my dev vm: bdc34-dev.library.cornell.edu/glopad
+How do I point it at my server?
+Shinwoo Kim
+12:33 PM
+in the lodlive.profile.js
+	// parametri di connessione agli endpoint
+	'connection' : {
+		/*matching all the requested URIs*/
+		'http://sk274-dev.library.cornell.edu:8080' : {
+			description : {
+				en : 'just a test'
+			},
+			useForInverseSameAs : true,
+			/*change this*/
+			endpoint : 'http://sk274-dev.library.cornell.edu:8080/d2rq/sparql',
+			examples : [{
+				label : 'Joshua Young',
+				uri : 'http://sk274-dev.library.cornell.edu:8080/d2rq/resource/d_person/1001634'
+			}, {
+                label : "Fanny's First Play, Art's Theatre Club, London, 1944",
+                uri : 'http://sk274-dev.library.cornell.edu:8080/d2rq/resource/d_digdoc/2020'
+            },
+			]
+		}
+	},
+is the code I used
+you will also need to change endpoint in default section to your server address
+I used endpoint : 'http://sk274-dev.library.cornell.edu:8080/d2rq',
+Shinwoo Kim
+12:36 PM
+I think I got it now to point to Brian's d2rq server
+Brian Caruso
+12:46 PM
+@JimReidy Does the thumbnail image work for you? It doesn't work for us.
+SHould it be thumburl or d_digdoc_filename ?
+James Reidy
+12:48 PM
+Not in your setup. In my local setup it provides a link to the image
+Brian Caruso
+12:48 PM
+?
+So it isn't in the database?
+James Reidy
+12:48 PM
+there is one for the thumbnail and another for the full image
+the images are on www.glopad.org
+Brian Caruso
+12:49 PM
+If I go here:
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/page/d_digdoc/2020
+I don't see a thumbnail url or a url
+Where should the url come from?
+Brian Caruso
+12:50 PM
+I don't really understand where the URL should come from.
+James Reidy
+12:53 PM
+d_digdoc.thumburl is a partial path to the thumbnail image
+Brian Caruso
+12:53 PM
+What is the URL that is used to serve it?
+I"m seeing stuff like http://www.glopad.org/glopad/images/glopad/2583.jpg
+
+
+James Reidy
+12:54 PM
+d2rq:uriSqlExpression "CONCAT('http://www.glopad.org/', d_digdoc.thumburl::text)";
+Brian Caruso
+12:54 PM
+thumburl is mostly empty
+Shinwoo Kim
+12:57 PM
+here is a better exam[le
+example
+http://sk274-dev.library.cornell.edu/glopad/?http://lib-dev-020.ser...
+Brian Caruso
+12:59 PM
+I'm restarting tomcat so shinwoos stuff might die for a bit
+James Reidy
+1:00 PM
+I'm having trouble with my laptop that's really slowing me down. please bear with me
+Brian Caruso
+1:19 PM
+@JimReidy okay, we have the mapping up on my server that we are going to use.
+Shinwoo has the visualization stuff on his server that points to my server's d2rq data.
+James Reidy
+1:19 PM
+Is that the same one you emailed me?
+Brian Caruso
+1:19 PM
+No I think we made some changes.
+We added images in a way that half works.
+Here is my dqr2
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/
+James Reidy
+1:20 PM
+I will check
+Shinwoo Kim
+1:20 PM
+http://sk274-dev.library.cornell.edu/glopad/?http://lib-dev-020.ser...
+Brian Caruso
+1:20 PM
+http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/snorql/
+Here is the sparql explorer on that server
+Shinwoo Kim
+1:20 PM
+was the one we were looking at
+when you look at the detail of that object (note like icon), the thumbnail image should show on top and if you click on it, it should display the full image
+Brian Caruso
+1:41 PM
+To the last mapping I manually added geo coding:
+map:d_place_latitude a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:d_place;
+	d2rq:property geo:lat;
+	d2rq:propertyDefinitionLabel "d_place latitude";
+	d2rq:column "d_place.latitude";
+	d2rq:datatype xsd:double;
+	.
+
+
+
+map:d_place_longitude a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:d_place;
+	d2rq:property geo:long;
+	d2rq:propertyDefinitionLabel "d_place longitude";
+	d2rq:column "d_place.longitude";
+	d2rq:datatype xsd:double;
+	.
+James Reidy
+2:03 PM
+Here's a query : "What cities were Bernard Shaw's plays performed in?"
+SELECT DISTINCT ?s ?play ?piece ?piecename ?productionname ?placename
+WHERE { 
+?s <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/...; "Shaw, Bernard" .
+?s <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/...
+...
+; ?piece .
+?piece <http://www.w3.org/2000/01/rdf-schema#label>; ?piecename .
+?production <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_production_to_d_piece>; ?piece .
+?production <http://www.w3.org/2000/01/rdf-schema#label>; ?productionname .
+?production <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_production_to_d_place>; ?place .
+?place <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_place_city>; ?placename
+}
+ORDER BY ?value
+Show full text
+James Reidy
+2:05 PM
+oops
+SELECT DISTINCT ?s ?play ?piece ?piecename ?productionname ?placename
+WHERE { 
+?s <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/...; "Shaw, Bernard" .
+?s <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/...
+...
+; ?piece .
+?piece <http://www.w3.org/2000/01/rdf-schema#label>; ?piecename .
+?production <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_production_to_d_piece>; ?piece .
+?production <http://www.w3.org/2000/01/rdf-schema#label>; ?productionname .
+?production <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_production_to_d_place>; ?place .
+?place <http://lib-dev-020.serverfarm.cornell.edu:8080/d2rq/resource/vocab/d_place_city>; ?placename
+}
+ORDER BY ?placename
+LIMIT 100
+Show full text
+James Reidy
+3:49 PM
+Great presentation - Thanks!
+Brian Caruso
+3:59 PM
+@JimReidy Thanks to you for your work too!
+Shinwoo Kim
+3:59 PM
+Thanks everyone! It was great project, Jim!
+Brian Caruso
+3:59 PM
+Sorry we didn't mention your SPARQL queries, I just saw them now.
+4:03 PM
+James Reidy left the room.
