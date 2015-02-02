@@ -6,7 +6,7 @@ Project for Technology Innovation Week - Jan 6 2015
 Brian Caruso, Shinwoo Kim, James Reidy.
 
 * Converting the GloPAD data to RDF
-The glopad data was provided as a dump of a postgres database. This
+The GloPAD data was provided as a dump of a postgres database. This
 was loaded into a postgres 9.3 database and then mapped to RDF using
 D2RQ.
 
@@ -22,7 +22,7 @@ $ cp d2rq.war /lib-dev/tomcat/webapps
 
 #+END_SRC
 
-** To dump glopad as N3 RDF
+** To dump GloPAD as N3 RDF
 
 #+BEGIN_SRC bash
 
@@ -54,10 +54,10 @@ prototype and not a complete working example.
 2. The IRIs used do not work well with RDF/XML tools such as
 3. The classes and properties are not associated with any popular
    ontology. Since we are working with relations that come up in many
-   contextes we should be able to find existing ontologies to use.
+   contexts we should be able to find existing ontologies to use.
    Some to consider are DBPedia, FOAF and BIBFRAME.
 4. The images from the GloPAD system are not represented well.
-5. The GloPAD alt names and multilanguage names are not mapped.
+5. The GloPAD alt names and multilingual names are not mapped.
 6. The GloPAD dates are not mapped in any way.
 
 * Visualization of GlopadRDF
@@ -67,20 +67,20 @@ See contents of lodlive directory.
 * Why convert GloPAD to RDF?
 
 GloPAD is offers a wealth of relations between digital objects, people
-involved in the performing arts, plays, perfromances and therters. If
+involved in the performing arts, plays, performances and theaters. If
 this collection of information is valuable, it will be necessary to
 maintain it to continue to provide access to it. Converting the data
-in GloPAD to RDF offers a way to performance this maintance with
+in GloPAD to RDF offers a way to performance this maintenance with
 advantages over alternatives.
 
 1. System agnostic data format avoids lock in
-2. Possible to use well known properties such as from dbpedia or BIBFRAME
+2. Possible to use well known properties such as from DBPedia or BIBFRAME
 3. Many tools used by CULIT work with RDF, drupal, Ruby on Rails,
    Vivo, Fedora
 
 * Ideas for further work
 
-1. Map the GloPAD data better. Get the dates, multilanguage labels,
+1. Map the GloPAD data better. Get the dates, multilingual labels,
    URLs for images etc.
 2. Once the data is mapped to RDF, transform as many properties and
    classes as possible to commonly used ontologies with SPARQL
@@ -90,5 +90,5 @@ advantages over alternatives.
 4. Load the data into Vitro using rdf/abox/firsttime and
    rdf/tbox/firsttime. 
 5. See if editing and display in Vitro are acceptable and
-   create custom forms and tempaltes where they are not.
+   create custom forms and templates where they are not.
 6. Asses other RDF tools for use with GloPAD such as Drupal or ActiveRDF+RoR.
