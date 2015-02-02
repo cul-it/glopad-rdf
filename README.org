@@ -5,7 +5,7 @@ Attempt to move GloPad into RDF and then into some visualization tool.
 Project for Technology Innovation Week - Jan 6 2015
 Brian Caruso, Shinwoo Kim, James Reidy.
 
-* Glopad to RDF
+* Converting the GloPAD data to RDF
 The glopad data was provided as a dump of a postgres database. This
 was loaded into a postgres 9.3 database and then mapped to RDF using
 D2RQ.
@@ -45,10 +45,50 @@ $ ./pellet.sh lint -v -only RDF -f /lib-dev/vitro-glopad/lopad-ont.rdf ~/glopadR
 
 #+END_SRC
 
+* Some tasks that have not been done
+
+The mapping created during the week in 2015-01-20 is a rough
+prototype and not a complete working example.
+
+1. An ontology has not been created. A quick one was created with Pellet.
+2. The IRIs used do not work well with RDF/XML tools such as
+3. The classes and properties are not associated with any popular
+   ontology. Since we are working with relations that come up in many
+   contextes we should be able to find existing ontologies to use.
+   Some to consider are DBPedia, FOAF and BIBFRAME.
+4. The images from the GloPAD system are not represented well.
+5. The GloPAD alt names and multilanguage names are not mapped.
+6. The GloPAD dates are not mapped in any way.
+
 * Visualization of GlopadRDF
 
 See contents of lodlive directory.
 
+* Why convert GloPAD to RDF?
 
+GloPAD is offers a wealth of relations between digital objects, people
+involved in the performing arts, plays, perfromances and therters. If
+this collection of information is valuable, it will be necessary to
+maintain it to continue to provide access to it. Converting the data
+in GloPAD to RDF offers a way to performance this maintance with
+advantages over alternatives.
 
+1. System agnostic data format avoids lock in
+2. Possible to use well known properties such as from dbpedia or BIBFRAME
+3. Many tools used by CULIT work with RDF, drupal, Ruby on Rails,
+   Vivo, Fedora
 
+* Ideas for further work
+
+1. Map the GloPAD data better. Get the dates, multilanguage labels,
+   URLs for images etc.
+2. Once the data is mapped to RDF, transform as many properties and
+   classes as possible to commonly used ontologies with SPARQL
+   constructs, or SWRL.
+3. Associated individuals in the GloPAD RDF with individuals in
+   DBPedia, LOC, or other LOD sources.
+4. Load the data into Vitro using rdf/abox/firsttime and
+   rdf/tbox/firsttime. 
+5. See if editing and display in Vitro are acceptable and
+   create custom forms and tempaltes where they are not.
+6. Asses other RDF tools for use with GloPAD such as Drupal or ActiveRDF+RoR.
