@@ -1,0 +1,238 @@
+# Here are some date mappings created by James R.
+# These have not been worked into glopad-table-analysis.pl
+
+
+
+# Table d_century
+map:d_century a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "d_century/@@d_century.centuryid@@";
+    d2rq:class vocab:d_century;
+    d2rq:classDefinitionLabel "d_century";
+    .
+map:d_century__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property rdfs:label;
+    d2rq:pattern "d_century #@@d_century.centuryid@@";
+    .
+map:d_century_centuryid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property vocab:d_century_centuryid;
+    d2rq:propertyDefinitionLabel "d_century centuryid";
+    d2rq:column "d_century.centuryid";
+    d2rq:datatype xsd:integer;
+    .
+map:d_century_startdate a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property vocab:d_century_startdate;
+    d2rq:propertyDefinitionLabel "d_century startdate";
+    d2rq:column "d_century.startdate";
+    d2rq:datatype xsd:date;
+    .
+map:d_century_enddate a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property vocab:d_century_enddate;
+    d2rq:propertyDefinitionLabel "d_century enddate";
+    d2rq:column "d_century.enddate";
+    d2rq:datatype xsd:date;
+    .
+map:d_century_century a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property vocab:d_century_century;
+    d2rq:propertyDefinitionLabel "d_century century";
+    d2rq:column "d_century.century";
+    .
+map:d_century_orderid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_century;
+    d2rq:property vocab:d_century_orderid;
+    d2rq:propertyDefinitionLabel "d_century orderid";
+    d2rq:column "d_century.orderid";
+    d2rq:datatype xsd:integer;
+    .
+
+# Table d_date
+map:d_date a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "d_date/@@d_date.dateid@@";
+    d2rq:class vocab:d_date;
+    d2rq:classDefinitionLabel "d_date";
+    .
+map:d_date__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property rdfs:label;
+    d2rq:pattern "d_date #@@d_date.dateid@@";
+    .
+map:d_date_dateid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_dateid;
+    d2rq:propertyDefinitionLabel "d_date dateid";
+    d2rq:column "d_date.dateid";
+    d2rq:datatype xsd:integer;
+    .
+map:d_date_dategran a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_dategran;
+    d2rq:propertyDefinitionLabel "d_date dategran";
+    d2rq:column "d_date.dategran";
+    # d2rq:datatype xsd:integer;
+    d2rq:translateWith map:d_date_dategran_flags;
+    .
+map:d_date_dategran_flags a d2rq:TranslationTable;
+    d2rq:translation [ d2rq:databaseValue "0"; d2rq:rdfValue "Unknown"; ];
+    d2rq:translation [ d2rq:databaseValue "2"; d2rq:rdfValue "Era"; ];
+    d2rq:translation [ d2rq:databaseValue "12"; d2rq:rdfValue "Start
+Century"; ];
+    d2rq:translation [ d2rq:databaseValue "20"; d2rq:rdfValue "Starting
+Year"; ];
+    d2rq:translation [ d2rq:databaseValue "52"; d2rq:rdfValue "Starting
+Year-Month"; ];
+    d2rq:translation [ d2rq:databaseValue "84"; d2rq:rdfValue "Starting
+Year-Day"; ];
+    d2rq:translation [ d2rq:databaseValue "116"; d2rq:rdfValue "Starting
+Year-Month-Day"; ];
+    d2rq:translation [ d2rq:databaseValue "396"; d2rq:rdfValue "Century
+Range"; ];
+    d2rq:translation [ d2rq:databaseValue "652"; d2rq:rdfValue "Century
+Start Range End"; ];
+    d2rq:translation [ d2rq:databaseValue "660"; d2rq:rdfValue "Start and
+End Year"; ];
+    d2rq:translation [ d2rq:databaseValue "692"; d2rq:rdfValue "Unknown
+692"; ];
+    d2rq:translation [ d2rq:databaseValue "724"; d2rq:rdfValue "Unknown
+724"; ];
+    d2rq:translation [ d2rq:databaseValue "756"; d2rq:rdfValue "Unknown
+756"; ];
+    d2rq:translation [ d2rq:databaseValue "1676"; d2rq:rdfValue "Unknown
+1676"; ];
+    d2rq:translation [ d2rq:databaseValue "1684"; d2rq:rdfValue "Unknown
+1684"; ];
+    d2rq:translation [ d2rq:databaseValue "1716"; d2rq:rdfValue "Unknown
+1716"; ];
+    d2rq:translation [ d2rq:databaseValue "3724"; d2rq:rdfValue "Unknown
+3724"; ];
+    d2rq:translation [ d2rq:databaseValue "3732"; d2rq:rdfValue "Unknown
+3732"; ];
+    d2rq:translation [ d2rq:databaseValue "3764"; d2rq:rdfValue "Unknown
+3764"; ];
+    d2rq:translation [ d2rq:databaseValue "3828"; d2rq:rdfValue "Unknown
+3828"; ];
+    d2rq:translation [ d2rq:databaseValue "4096"; d2rq:rdfValue "Unknown
+Date"; ];
+    d2rq:translation [ d2rq:databaseValue "32768"; d2rq:rdfValue
+"Century"; ];
+    .
+map:d_date_centuryid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_centuryid;
+    d2rq:propertyDefinitionLabel "d_date centuryid";
+    d2rq:refersToClassMap map:d_century;
+    d2rq:join "d_date.centuryid => d_century.centuryid";
+    d2rq:condition "d_date.dategran > 0";
+    .
+map:d_date_eraid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_eraid;
+    d2rq:propertyDefinitionLabel "d_date eraid";
+    d2rq:refersToClassMap map:d_era;
+    d2rq:join "d_date.eraid => d_era.eraid";
+    d2rq:condition "(d_date.dategran & (1<<1)::int)::int > 0";
+   .
+map:d_date_date a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_date;
+    d2rq:propertyDefinitionLabel "d_date date";
+    d2rq:column "d_date.date";
+    d2rq:datatype xsd:date;
+    .
+map:d_date_rangestart a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_rangestart;
+    d2rq:propertyDefinitionLabel "d_date rangestart";
+    d2rq:column "d_date.rangestart";
+    d2rq:datatype xsd:date;
+    .
+map:d_date_rangestartcenturyid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_rangestartcenturyid;
+    d2rq:propertyDefinitionLabel "d_date rangestartcenturyid";
+    #d2rq:column "d_date.rangestartcenturyid";
+    #d2rq:datatype xsd:integer;
+    d2rq:refersToClassMap map:d_century;
+    d2rq:join "d_date.rangestartcenturyid => d_century.centuryid";
+    d2rq:condition "d_date.dategran IN (12, 652)";
+    .
+map:d_date_rangestartgran a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_rangestartgran;
+    d2rq:propertyDefinitionLabel "d_date rangestartgran";
+    d2rq:column "d_date.rangestartgran";
+    d2rq:datatype xsd:integer;
+    .
+map:d_date_rangeend a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_rangeend;
+    d2rq:propertyDefinitionLabel "d_date rangeend";
+    d2rq:column "d_date.rangeend";
+    d2rq:datatype xsd:date;
+    .
+map:d_date_rangeendgran a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_rangeendgran;
+    d2rq:propertyDefinitionLabel "d_date rangeendgran";
+    d2rq:column "d_date.rangeendgran";
+    d2rq:datatype xsd:integer;
+    .
+map:d_date_monthid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_date;
+    d2rq:property vocab:d_date_monthid;
+    d2rq:propertyDefinitionLabel "d_date monthid";
+    d2rq:column "d_date.monthid";
+    d2rq:datatype xsd:integer;
+    .
+
+# Table d_era
+map:d_era a d2rq:ClassMap;
+    d2rq:dataStorage map:database;
+    d2rq:uriPattern "d_era/@@d_era.eraid@@";
+    d2rq:class vocab:d_era;
+    d2rq:classDefinitionLabel "d_era";
+    .
+map:d_era__label a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property rdfs:label;
+    d2rq:pattern "d_era #@@d_era.eraid@@";
+    .
+map:d_era_eraid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property vocab:d_era_eraid;
+    d2rq:propertyDefinitionLabel "d_era eraid";
+    d2rq:column "d_era.eraid";
+    d2rq:datatype xsd:integer;
+    .
+map:d_era_startdate a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property vocab:d_era_startdate;
+    d2rq:propertyDefinitionLabel "d_era startdate";
+    d2rq:column "d_era.startdate";
+    d2rq:datatype xsd:date;
+    .
+map:d_era_enddate a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property vocab:d_era_enddate;
+    d2rq:propertyDefinitionLabel "d_era enddate";
+    d2rq:column "d_era.enddate";
+    d2rq:datatype xsd:date;
+    .
+map:d_era_era a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property vocab:d_era_era;
+    d2rq:propertyDefinitionLabel "d_era era";
+    d2rq:column "d_era.era";
+    .
+map:d_era_orderid a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:d_era;
+    d2rq:property vocab:d_era_orderid;
+    d2rq:propertyDefinitionLabel "d_era orderid";
+    d2rq:column "d_era.orderid";
+    d2rq:datatype xsd:integer;
+    .

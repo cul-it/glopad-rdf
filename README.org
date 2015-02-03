@@ -58,7 +58,8 @@ prototype and not a complete working example.
    Some to consider are DBPedia, FOAF and BIBFRAME.
 4. The images from the GloPAD system are not represented well.
 5. The GloPAD alt names and multilingual names are not mapped.
-6. The GloPAD dates are not mapped in any way.
+6. The GloPAD dates are not mapped, there is a first attempt to map
+   them in datesMapping.ttl.
 
 * Visualization of GlopadRDF
 
